@@ -1,0 +1,115 @@
+{% set title = '高级搜索' %}
+{% set page = 'advancedsearch.html' %}
+{% extends 'layouts/master.html' %}
+
+{% block plugins_css %}
+  <link rel="stylesheet" href="../node_modules/bootstrap-daterangepicker/daterangepicker.css">
+  <link rel="stylesheet" href="../node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+  <link rel="stylesheet" href="../node_modules/select2/dist/css/select2.min.css">
+  <link rel="stylesheet" href="../node_modules/selectric/public/selectric.css">
+  <link rel="stylesheet" href="../node_modules/bootstrap-timepicker/css/bootstrap-timepicker.min.css">
+{% endblock %}
+
+{% block content %}
+  <section>    
+   
+  <div class="card">
+    <div class="card-header">
+      <h4>搜索条件</h4>
+    </div>
+    <div class="card-body">
+
+      <div class="form-group" style="margin-bottom: 5px;">
+        <div style="display: inline-block; padding-right: 12px;">
+            <label>书名</label>
+        </div>
+        <div style="display: inline-block; padding-right: 10px;">
+            <input type="text" class="form-control" style="height:25px;">
+        </div>
+      </div>
+      
+      <div class="form-group" style="margin-bottom: 5px;">
+          <div style="display: inline-block; padding-right: 12px;">
+              <label>作者</label>
+          </div>
+          <div style="display: inline-block;">
+              <input type="text" class="form-control" style="height:25px;">
+          </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 5px;">
+          <div style="display: inline-block; padding-right: 12px;">
+              <label>译者</label>
+          </div>
+          <div style="display: inline-block;">
+              <input type="text" class="form-control" style="height:25px;">
+          </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 5px;">
+          <div style="display: inline-block;">
+              <label>关键字</label>
+          </div>
+          <div style="display: inline-block;">
+              <input type="text" class="form-control" style="height:25px;">
+          </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 5px;">
+          <div style="display: inline-block;padding-right: 12px;">
+              <label>书 号</label>
+          </div>
+          <div style="display: inline-block;">
+              <input type="text" class="form-control" style="height:25px;">
+          </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 5px;">
+          <div style="display: inline-block;padding-right: 12px;">
+              <label>类别</label>
+          </div>
+          <div style="display: inline-block;">
+              <input type="text" class="form-control" style="height:25px;">
+          </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 5px;">
+          <div style="display: inline-block;">
+              <label>出版社</label>
+          </div>
+          <div style="display: inline-block;">
+              <input type="text" class="form-control" style="height:25px;">
+          </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 5px;">
+          <div style="display: inline-block;">
+              <label>发表日期</label>
+              <label>从</label>
+          </div>
+          <div style="display: inline-block;">
+              <input type="text" class="form-control datepicker"style="height:25px;">
+          </div>
+          <div style="display: inline-block;"><label>到</label></div>
+          <div style="display: inline-block;"><input type="text" class="form-control datepicker"style="height:25px;"></div>   
+              
+      </div>
+
+      <div class="buttons" style="float:right;margin-right: 30%;">
+          <a href="#" class="btn btn-primary">检索</a>
+      </div>
+        
+{% endblock %}
+
+
+{% block plugins_js %}
+  <script src="../node_modules/cleave.js/dist/cleave.min.js"></script>
+  <script src="../node_modules/cleave.js/dist/addons/cleave-phone.us.js"></script>
+  <script src="../node_modules/jquery-pwstrength/jquery.pwstrength.min.js"></script>
+  <script src="../node_modules/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <script src="../node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+  <script src="../node_modules/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+  <script src="../node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+  <script src="../node_modules/select2/dist/js/select2.full.min.js"></script>
+  <script src="../node_modules/selectric/public/jquery.selectric.min.js"></script>
+{% endblock %}

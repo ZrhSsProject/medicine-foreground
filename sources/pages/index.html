@@ -1,0 +1,279 @@
+{% set title = '主页' %}
+{% set page = 'index.html' %}
+{% extends 'layouts/master.html' %}
+
+{% block content %}
+  <section>
+    
+    <div class="form-group" style="display: inline-block;margin-left: 30%;">
+      <select id="select" class="form-control" style="padding:5px 5px;">
+        <option>书名</option>
+        <option>作者</option>
+        <option>译者</option>
+        <option>关键词</option>
+      </select>
+    </div>
+    
+    <div class="card-header-form" style="display: inline-block;">
+          <div class="input-group">
+            <input id="querydata" type="text" class="form-control" placeholder="Search" >
+            <a href="#"><button id ="simplesearch" class="btn btn-warning" style="height:40px;" ><i class="fas fa-search"></i></button></a>
+          </div>
+    </div>
+      
+    <div class="form-group" style="margin-left: 30%;">
+      <label class="d-block">跨库</label>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+        <label class="form-check-label" for="inlineCheckbox1">会议</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+        <label class="form-check-label" for="inlineCheckbox2">报纸</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+        <label class="form-check-label" for="inlineCheckbox3">标准</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+        <label class="form-check-label" for="inlineCheckbox3">期刊</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+        <label class="form-check-label" for="inlineCheckbox3">专利</label>
+      </div>
+    </div>
+      
+    <div class="card">
+      <div class="card-header">
+        <h4 style="color:tomato">热门书籍</h4>
+        <div class="card-header-action">
+          <a href="catalog-browse.html" class="btn btn-warning" >浏览更多<i class="fas fa-chevron-right"></i></a>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <div class="table-responsive table-invoice">
+          <table id="mains" class="table table-striped">
+            <tr>
+              <th>序号</th>
+              <th>书名</th>
+              <th>作者</th>
+              <th>类别</th>
+              <th>阅读量</th>
+              <th>被引量</th>
+              <th>浏览</th>
+            </tr>
+            <tr>
+              <td></td>
+              <td><a href="#">INV-87239</a></td>
+              <td class="font-weight-600">李时珍</td>
+              <td>第二版</td>
+              <td>66</td>
+              <td>
+                6
+              </td>
+              <td>
+                  <a href="#" class="btn btn-success">查看</a>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><a href="#">INV-48574</a></td>
+              <td class="font-weight-600">李时珍</td>
+              <td></td>
+              <td>55</td>
+              <td>
+                5
+              </td>
+              <td>
+                  <a href="#" class="btn btn-success">查看</a>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><a href="#">INV-76824</a></td>
+              <td class="font-weight-600">李时珍</td>
+              <td></td>
+              <td>44</td>
+              <td>
+                4
+              </td>
+              <td>
+                  <a href="#" class="btn btn-success">查看</a>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><a href="#">INV-84990</a></td>
+              <td class="font-weight-600">李时珍</td>
+              <td></td>
+              <td>33</td>
+              <td>
+                3
+              </td>
+              <td>
+                  <a href="#" class="btn btn-success">查看</a>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><a href="#">INV-87320</a></td>
+              <td class="font-weight-600">李时珍</td>
+              <td></td>
+              <td>22</td>
+              <td>
+                2
+              </td>
+              <td>
+                
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><a href="#">INV-87320</a></td>
+              <td class="font-weight-600">李时珍</td>
+              <td></td>
+              <td>22</td>
+              <td>
+                2
+              </td>
+              <td>
+                  <a href="#" class="btn btn-success">查看</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div >
+      <div class="card" >
+        <div class="card-body" style="margin-top: 0mm;">
+          <nav aria-label="Page navigation example" style="float:right;">
+            <ul class="pagination">
+              <li class="page-item" id="previous"><a class="page-link">上一页</a></li>         
+              <li class="page-item" id="current" style="line-height: 35px;width: 20px;text-align: center;"><a class="page-link">1</a></li>
+              <li class="page-item" id="next"><a class="page-link">下一页</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    
+
+  </section>
+
+  <form method="post" id="form" style="display: none;" action="coverofbook.html">
+      <input name="fileID" type='hidden' />
+      <input id="submit" type="submit" />
+  </form>
+        
+{% endblock %}
+
+{% block plugins_js %}
+<script type="text/javascript">
+var MainHandler = function () {}; 
+var simplesearchHandler = function () {};
+var current = 0;
+var num=4;
+
+function detail(fileID){
+  $.session.set('fileID', fileID);
+  window.location.href = "coverofbook.html";
+}
+
+function modify(obj){
+  var index =  0;  
+  $("td").each(function(){
+    if(parseInt(index/7) >= obj.length)
+        $(this).text("");
+    else if(index % 7 == 0)
+      $(this).text(parseInt(index/7)+1+current*num);
+    else if(index % 7 == 1)
+      $(this).text(obj[parseInt(index/7)].fileName);
+    else if(index % 7 == 2)
+      $(this).text(obj[parseInt(index/7)].author);
+    else if(index % 7 == 3)
+      $(this).text(obj[parseInt(index/7)].cateName);
+    else if(index % 7 == 4)
+      $(this).text(obj[parseInt(index/7)].readingQuantity);
+    else if(index % 7 == 5)
+      $(this).text(obj[parseInt(index/7)].citedQuantity);
+    else if(index % 7 == 6){
+      $(this).text("");
+      fileID = obj[parseInt(index/7)].fileID;
+      $(this).append("<a href='javascript:void(0);' onclick='detail("+fileID+")' class='btn btn-success'>查看</a>");
+    }
+    index++;
+  });
+  $("#current").text((current+1)+"");
+}
+
+$(document).ready(function(){
+  $.ajax({
+    url:"http://localhost:8081/Main/"+current*num+"/"+num+"",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "MainHandler",
+    success:function(obj) {
+      modify(obj);
+    }
+  });
+});
+
+$("#previous").click(function(){
+  if(current > 0)
+    current--;
+  $.ajax({
+    url:"http://localhost:8081/Main/"+current*num+"/"+num+"",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "MainHandler",
+    success:function(obj) {
+      modify(obj);
+    }
+  });
+});
+
+$("#next").click(function(){
+  current++;
+  $.ajax({
+    url:"http://localhost:8081/Main/"+current*num+"/"+num+"",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "MainHandler",
+    success:function(obj) {
+      if(obj.length == 0){
+        current--;
+      }else
+        modify(obj);
+    }
+  });
+});
+
+$("#simplesearch").click(function(){
+  $.ajax({
+    url:"http://localhost:8081/simpleSearch/"+$("#select").val()+"/"+$("#querydata").val()+"",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "simplesearchHandler",
+    success:function(obj) {
+     modify(obj);
+    }
+  });
+});
+</script>
+{% endblock %}

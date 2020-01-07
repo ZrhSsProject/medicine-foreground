@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">  
+  <title>testTable</title>
+
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+  <!-- CSS Libraries -->
+  <link rel="stylesheet" href="../node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <style>
+    #__bs_notify__
+  {display: none !important;}
+  </style>
+  
+</head>
+
+<body>
+  <div id="app">
+    <div class="main-wrapper">
+      <div class="navbar-bg" style="height:10%;background-color:peru;position: fixed;z-index: 888;"></div>
+      <nav class="navbar navbar-expand-lg main-navbar" style="position: fixed;">
+        <form class="form-inline mr-auto">
+          <ul class="navbar-nav mr-3">
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
+            <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
+          </ul>
+        </form>
+        <ul class="navbar-nav navbar-right">
+          <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+            <img alt="image" src="../assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
+            <div class="d-sm-none d-lg-inline-block">你好，用户</div></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <div class="dropdown-title">五分钟前登录</div>
+            
+              <a href="personactivities.html" class="dropdown-item has-icon">
+                <i class="fas fa-bolt"></i> 个人足迹
+              </a>
+              <a href="auth-reset-password.html" class="dropdown-item has-icon">
+                <i class="fas fa-cog"></i> 修改密码
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="auth-login.html" class="dropdown-item has-icon text-danger">
+                <i class="fas fa-sign-out-alt"></i> 退出
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <div class="main-sidebar" style="z-index: 999">
+        <aside id="sidebar-wrapper">
+          <div class="sidebar-brand">
+            <a href="index.html">古籍检索与应用系统</a>
+          </div>
+          <div class="sidebar-brand sidebar-brand-sm">
+            <a href="index.html"></a>
+          </div>
+          <ul class="sidebar-menu">     
+              <li class="nav-item dropdown">
+                <a href="index.html" class="nav-link"><i class="fas fa-fire"></i><span>主页</span></a>  
+              </li>
+              <li class="nav-item dropdown">
+                <a href="catalog-browse.html" class="nav-link"><i class="fas fa-columns"></i> <span>分类浏览</span></a>
+              </li>
+              <li class="nav-item dropdown">
+                <a href="advancedsearch.html" class="nav-link"><i class="fas fa-search"></i> <span>高级检索</span></a>
+              </li>
+              <li class="nav-item dropdown">
+                <a href="specialknowledgebase.html" class="nav-link"><i class="fas fa-th-large"></i> <span>专题资料库</span></a>
+              </li>
+              <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i> <span>用户中心</span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="auth-login.html">登录</a></li>
+                    <li><a href="auth-register.html">注册</a></li>
+                    <li><a href="auth-forgot-password.html">忘记密码</a></li>
+                    <li><a href="auth-reset-password.html">重置密码</a></li>
+                  </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-map-marker-alt"></i> <span>联系我们</span></a>
+              </li>
+              <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-plug"></i> <span>帮助文档</span></a>
+              </li>
+              
+              
+
+            
+        </aside>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+
+            <div class="form-group" style="display: inline-block;margin-left: 30%;">
+                <select id="select" class="form-control" style="padding:5px 5px;">
+                  <option>书名</option>
+                  <option>作者</option>
+                  <option>译者</option>
+                  <option>关键词</option>
+                </select>
+            </div>
+              
+            <div class="card-header-form" style="display: inline-block;">
+                  <div class="input-group">
+                    <input id="querydata" type="text" class="form-control" placeholder="Search" >
+                    <a href="#"><button id ="simplesearch" class="btn btn-warning" style="height:40px;" ><i class="fas fa-search"></i></button></a>
+                  </div>
+            </div>
+              
+            <div class="form-group" style="margin-left: 30%;">
+              <label class="d-block">跨库</label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                <label class="form-check-label" for="inlineCheckbox1">会议</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                <label class="form-check-label" for="inlineCheckbox2">报纸</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                <label class="form-check-label" for="inlineCheckbox3">标准</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                <label class="form-check-label" for="inlineCheckbox3">期刊</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                <label class="form-check-label" for="inlineCheckbox3">专利</label>
+              </div>
+            </div>
+
+            <div class="section-body">
+               
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <h4>热门搜索</h4>
+                      </div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table table-striped" id="table-1">
+                            <thead>
+                              <tr>
+                                <th class="text-center">
+                                  #
+                                </th>
+                                <th>书名</th>
+                                <th>作者</th>
+                                <th>类别</th>
+                                <th>阅读量</th>
+                                <th>被引量</th>
+                                <th>浏览</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                             
+    
+                                  <tr>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                    </tr>
+    
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+    
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                      </tr>
+        
+        
+                                       
+                                                          
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+              </div>
+
+         
+        </section>
+
+      </div>
+      <footer class="main-footer">
+        <div class="footer-left">
+          Copyright &copy;</a>
+        </div>
+        
+      </footer>
+    </div>
+  </div>
+
+  <!-- General JS Scripts -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="../assets/js/stisla.js"></script>
+  <script src="../assets/js/jquerysession.js"></script>
+
+  <!-- JS Libraies -->
+<script src="../node_modules/datatables/media/js/jquery.dataTables.min.js"></script>
+  <script src="../node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="../node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $.ajax({
+      url:"http://localhost:8081/maintest/"+"",
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "MaintestHandler",
+      success:function(obj) {
+        var index =  0;  
+        $("td").each(function(){
+          if(parseInt(index/7) >= obj.length)
+              $(this).text("");
+          else if(index % 7 == 0)
+            $(this).text(parseInt(index/7)+1);
+          else if(index % 7 == 1)
+            $(this).text(obj[parseInt(index/7)].fileName);
+          else if(index % 7 == 2)
+            $(this).text(obj[parseInt(index/7)].author);
+          else if(index % 7 == 3)
+            $(this).text(obj[parseInt(index/7)].cateName);
+          else if(index % 7 == 4)
+            $(this).text(obj[parseInt(index/7)].readingQuantity);
+          else if(index % 7 == 5)
+            $(this).text(obj[parseInt(index/7)].citedQuantity);
+          else if(index % 7 == 6){
+            $(this).text("");
+            $(this).append("<a href='javascript:void(0);' class='btn btn-success'>查看</a>");
+          }
+          index++;
+        });
+      }
+    });
+  });
+</script>
+
+
+  <!-- Template JS File -->
+  <script src="../assets/js/scripts.js"></script>
+  <script src="../assets/js/custom.js"></script>
+
+  <!-- Page Specific JS File -->
+  <script src="../assets/js/page/modules-datatables.js"></script>
+</body>
+</html>

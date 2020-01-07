@@ -1,0 +1,32 @@
+          <ul class="sidebar-menu">     
+              <li class="nav-item dropdown{{ ' active'|is_active('^index(.*)', page)|safe }}">
+                <a href="index.html" class="nav-link"><i class="fas fa-fire"></i><span>主页</span></a>  
+              </li>
+              <li class="nav-item dropdown{{ ' active'|is_active('^catalog-browse(.*)', page)|safe }}">
+                <a href="catalog-browse.html" class="nav-link"><i class="fas fa-columns"></i> <span>分类浏览</span></a>
+              </li>
+              <li class="nav-item dropdown{{ ' active'|is_active('^advancedsearch(.*)', page)|safe }}">
+                <a href="advancedsearch.html" class="nav-link"><i class="fas fa-search"></i> <span>高级检索</span></a>
+              </li>
+              <li class="nav-item dropdown{{ ' active'|is_active('^specialknowledgebase(.*)', page)|safe }}">
+                <a href="specialknowledgebase.html" class="nav-link"><i class="fas fa-th-large"></i> <span>专题资料库</span></a>
+              </li>
+              <li class="nav-item dropdown{{ ' active'|is_active('^forms-(.*)', page)|safe }}">
+                <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i> <span>用户中心</span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="auth-login.html">登录</a></li>
+                    <li><a href="auth-register.html">注册</a></li>
+                    <li><a href="auth-forgot-password.html">忘记密码</a></li>
+                    <li><a href="auth-reset-password.html">重置密码</a></li>
+                  </ul>
+              </li>
+              <li class="nav-item dropdown{{ ' active'|is_active('^gmaps-(.*)', page)|safe }}">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-map-marker-alt"></i> <span>联系我们</span></a>
+              </li>
+              <li class="nav-item dropdown{{ ' active'|is_active('^modules-(.*)', page)|safe }}">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-plug"></i> <span>帮助文档</span></a>
+              </li>
+              
+              
+
+            

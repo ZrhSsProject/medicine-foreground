@@ -1,0 +1,64 @@
+{% set title = '阅览' %}
+{% set page = 'blank.html' %}
+{% extends 'layouts/master.html' %}
+
+{% block plugins_css %}
+  <link rel="stylesheet" href="../node_modules/summernote/dist/summernote-bs4.css">
+  <link rel="stylesheet" href="../node_modules/chocolat/dist/css/chocolat.css">
+{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="section-header" style="margin-bottom: 0mm;">
+      <h1>医法圆通</h1>
+      <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item active"><a href="#">医法圆通</a></div>
+        <div class="breadcrumb-item"><a href="#">第一章</a></div>
+        <div class="breadcrumb-item">第3页</div>
+      </div>
+    </div>
+       
+      <div class="card">
+        
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4">
+                <div class="list-group" id="list-tab" role="tablist" style="width:40%;">
+                  <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab">首页</a>
+                  <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab">上一页</a>
+                  <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab">11</a>
+                  <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab">12</a>
+                  <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab">13</a>
+                  <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab">14</a>
+                  <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab">15</a>
+                  <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab">16</a>
+                  <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab">17</a>
+                  <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab">18</a>
+                  <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab">下一页</a>
+                  <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab">尾页</a>
+                  <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab">跳转到<input type="text" style="height:20px;width:30px;">页</a>
+                </div>
+              </div>
+              <div class="col-8">
+                <div class="ticket-form">
+                  <form>
+                    <div class="form-group">
+                      <textarea class="summernote form-control"></textarea>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+  </section>
+
+        
+{% endblock %}
+
+{% block plugins_js %}
+  <script src="../node_modules/summernote/dist/summernote-bs4.js"></script>
+  <script src="../node_modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
+{% endblock %}

@@ -1,0 +1,109 @@
+{% set title = 'Login' %}
+{% set page = 'auth-login.html' %}
+{% set body = false %}
+{% extends 'layouts/master.html' %}
+
+{% block plugins_css %}
+  <link rel="stylesheet" href="../node_modules/bootstrap-social/bootstrap-social.css">
+{% endblock %}
+
+{% block content_2 %}
+    <section class="section">
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+            
+            <div class="card card-primary">
+              <div class="card-header"><h4 style="position: relative;left:18%;font-size: 20px;" >古籍检索与应用系统</h4></div>
+
+              <div class="card-body">
+                  <div class="form-group">
+                    <label for="email">账号</label>
+                    <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus>
+                    <div class="invalid-feedback">
+                      请输入账号
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="d-block">
+                    	<label for="password" class="control-label">密码</label>
+                      <div class="float-right">
+                        <a href="auth-forgot-password.html" class="text-small" >
+                          忘记密码?
+                        </a>
+                      </div>
+                    </div>
+                    <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
+                    <div class="invalid-feedback">
+                      请输入密码
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="custom-control custom-checkbox" style="display: inline-block">
+                      <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember-me" ">
+                      <label class="custom-control-label" for="remember-me" style="display:inline-block;font-size:12px;">记住我</label>
+                    </div>
+                    <div class="text-muted text-center" style="display:inline-block;position: relative;float: right;">
+                      <a href="auth-register.html" style="font-size:12px;">注册账户</a>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                    <button id="logins" type="submit" class="btn btn-primary btn-lg btn-block"  tabindex="4" >
+                      登录
+                    </button>
+                  </div>
+                <div class="text-center mt-4 mb-3">
+                  <div class="text-job text-muted">快捷登录</div>
+                </div>
+                <div class="row sm-gutters">
+                  <div class="col-6">
+                    <a class="btn btn-block btn-social btn-facebook btn-success">
+                      <span class="fab fa-weixin"></span> 微信
+                    </a>
+                  </div>
+                  <div class="col-6">
+                    <a class="btn btn-block btn-social btn-twitter">
+                      <span class="fab fa-weibo"></span> 微博
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+           
+            <div class="simple-footer">
+              Copyright &copy; 
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+{% endblock %}
+
+{% block plugins_js %}
+<script type="text/javascript">
+  $("#logins").click(function(){
+    alert($("#email").val());
+    alert($("#password").val());
+    $.ajax({
+      url:"http://localhost:8081/login/"+$("#email").val()+"/"+$("#password").val()+"",
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "LoginHandler",
+      success:function(obj) {
+        alert("success");
+        alert(obj.userName);
+        alert(obj.department);
+      }
+    });
+  });
+  var flightHandler = function () {};
+</script>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% set title = 'Blank Page' %}
+{% set page = 'blank.html' %}
+{% extends 'layouts/master.html' %}
+
+{% block content %}
+  <section>
+    <div class="card" style="margin-bottom: 0mm;">
+      <div class="card-body">
+        <div class="media">
+          <img class="mr-3" src="../assets/img/bookcover.jpg" alt="Generic placeholder image" style="height:200px;">
+          <div class="media-body" >
+            <h5 id="fileName" class="mt-0" style="padding-top: 5%;padding-left: 5%;" >医法圆通</h5>
+            <p  id="author" class="mb-0" style="padding-left: 5%;" >清·郑寿全著</p>
+            <p id="edition" class="mb-0" style="padding-left: 5%;">2004年10月3日 </p>
+            <p id="press" class="mb-0" style="padding-left: 5%;">大医精诚中医在线版权所有</p>
+            <div class="buttons" style="padding-left: 5%;padding-top: 2%;">
+            <a href="bookreading.html" class="btn btn-warning"  >开始阅读</a>
+            <a href="#" class="btn btn-success">收藏</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-body">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">简介</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">目录
+
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">评论</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              </div>
+              <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              </div>
+              <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                这是评论，TODO
+              </div>
+            </div>
+        </div>
+    </div>
+    
+  </section>
+
+        
+{% endblock %}
+
+{% block plugins_js %}
+<script type="text/javascript">
+  $(document).ready(function(){
+    fileID = $.session.get('fileID');
+    $.ajax({
+    url:"http://localhost:8081/BookDetail/"+fileID,
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "BookDetailHandler",
+    success:function(obj) {
+      alert(obj.list);
+      
+      $("#home").text(obj.introduce);
+      $("#profile").text(obj.list);
+      $("#fileName").text(obj.fileName);
+      alert(obj.fileName);
+    }
+  });
+  });
+</script>
+{% endblock %}
