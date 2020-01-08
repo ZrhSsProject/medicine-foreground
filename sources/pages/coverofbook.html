@@ -67,12 +67,9 @@
     jsonp: "callback",
     jsonpCallback: "BookDetailHandler",
     success:function(obj) {
-      alert(obj.list);
-      
       $("#home").text(obj.introduce);
       $("#profile").text(obj.list);
       $("#fileName").text(obj.fileName);
-      alert(obj.fileName);
     }
   });
   });

@@ -101,77 +101,60 @@
       <!-- Main Content -->
       <div class="main-content">
 <section class="section">
-    <div class="section-header" style="margin-bottom: 0mm;">
+    <div class="section-header" style="margin:0mm">
       <h1>医法圆通</h1>
+      
       <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item active"><a href="#">医法圆通</a></div>
-        <div class="breadcrumb-item"><a href="#">第一章</a></div>
-        <div class="breadcrumb-item">第3页</div>
+        <!-- 放大/缩小 -->
+      <input id="oldhide"  type="button"  value="显示原版" style="margin-right: 5px;" >
+        字号设置
+        <select id="fontchange" style="margin-left: 5px;">
+          <option value="12">小号</option>
+          <option value="14" selected>常规</option>
+          <option value="20">大号</option>
+          <option value="30">特大号</option>
+        </select>
       </div>
     </div>
        
-      <div class="card">
+    <input type="range" class="form-control" >
+    <div id="totalStyle" style="text-align: center;">
+      
+   
+
+      <div id="old" class="section-header"  style="display: none;width:45%;height:600px;text-align: left;">
+        <p>中醫瑰寶苑 </br> 
+          桂林古本傷寒雜病論上 </br>
+          
+          漢長沙太守南陽張機仲景  述 </br>
         
-          <div class="card-body">
-            <div class="row">
-              <div class="col-4">
-                <div class="list-group" id="list-tab" role="tablist" style="width:40%;">
-                  <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab">首页</a>
-                  <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab">上一页</a>
-                  <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab">11</a>
-                  <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab">12</a>
-                  <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab">13</a>
-                  <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab">14</a>
-                  <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab">15</a>
-                  <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab">16</a>
-                  <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab">17</a>
-                  <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab">18</a>
-                  <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab">下一页</a>
-                  <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab">尾页</a>
-                  <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab">跳转到<input type="text" style="height:20px;width:30px;">页</a>
-                </div>
-              </div>
-              <div class="col-8">
-                <!-- 放大/缩小 -->
-                <select id="fontchange">
-                  <option value="20">20</option>
-                  <option value="30">30</option>
-                  <option value="40">40</option>
-                  <option value="50">50</option>
-                </select>
-
-                <input id="oldhide"  type="button"  value="显示/隐藏">
-
-                <div id="old" style="display: inline-block;">
-                  <p>中醫瑰寶苑 </br> 
-                    桂林古本傷寒雜病論上 </br>
-                    
-                    漢長沙太守南陽張機仲景  述 </br>
-                  
-                    桂林羅哲初  手抄 </br>
-                  
-                    據廣西人民出版社1980年7月第2版 </br>
-                  </p>
-                </div>
-
-                <div id="new" style="display: inline-block;">
-                  <p>中医瑰宝苑 </br> 
-                    桂林古本伤寒杂病论上 </br>
-                    
-                  汉长沙太守南阳张机仲景  述 </br>
-                  
-                  桂林罗哲初  手抄 </br>
-                  
-                  据广西人民出版社1980年7月第2版 </br>
-                  </p>
-                </div>
-               
-                
-              </div>
-            </div>
-          </div>
-        </div>
+          桂林羅哲初  手抄 </br>
+        
+          據廣西人民出版社1980年7月第2版 據廣西人民出版社1980年7月第2版 據廣西人民出版社1980年7月第2版 </br>
+        </p>
       </div>
+
+      
+      
+      <div id="new" class="section-header"  style="display: inline-block;width:45%;height:600px;text-align: left;">
+        
+        <p id="passage"  >中医瑰宝苑 </br> 
+          桂林古本伤寒杂病论上 </br>
+          
+        汉长沙太守南阳张机仲景  述 </br>
+        
+        桂林罗哲初  手抄 </br>
+        
+        据广西人民出版社1980年7月第2版 据广西人民出版社1980年7月第2版 据广西人民出版社1980年7月第2版 </br>
+        
+        
+        </p>
+      </div>
+    </div>
+      
+    </div>
+        
+      
      
   </section>
 
@@ -200,14 +183,44 @@
 <script src="../node_modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
 
 <script>
+  $("#fontchange").change(function(){
+    $("#totalStyle").css("font-size",$("#fontchange").val()+"px");
+
+  });
+
+
   $("#oldhide").click(function(){
-    if($("#old").css("display") == "none")
+    if($("#old").css("display") == "none"){
       $("#old").css("display","inline-block");
-    else
-      $("#old").css("display","none");
+      $("#oldhide").val("隐藏原版");
+    }
+    else{
+    $("#oldhide").val("显示原版");
+    $("#old").css("display","none");
+    }
   });
 
   $path = "C:\100-桂林古本伤寒杂病论.txt";
+  
+$(document).ready(function(){
+  fileID = $.session.get('fileID');
+  $.ajax({
+    url:"http://localhost:8081/bookread/"+fileID+"/1",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "BookReadHandler",
+    success:function(obj) {
+     alert("success");
+     $("#old p").text("");
+     $("#old p").append(obj.res);
+     $("#new p").text("");
+     $("#new p").append(obj.res);
+    }
+  });
+});
 </script>
 
   <!-- Template JS File -->
