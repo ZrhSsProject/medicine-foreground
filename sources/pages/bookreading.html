@@ -40,13 +40,41 @@
                 </div>
               </div>
               <div class="col-8">
-                <div class="ticket-form">
-                  <form>
-                    <div class="form-group">
-                      <textarea class="summernote form-control"></textarea>
-                    </div>
-                  </form>
+                <!-- 放大/缩小 -->
+                <select id="fontchange">
+                  <option value="20">20</option>
+                  <option value="30">30</option>
+                  <option value="40">40</option>
+                  <option value="50">50</option>
+                </select>
+
+                <input id="oldhide"  type="button"  value="显示/隐藏">
+
+                <div id="old" style="display: inline-block;">
+                  <p>中醫瑰寶苑 </br> 
+                    桂林古本傷寒雜病論上 </br>
+                    
+                    漢長沙太守南陽張機仲景  述 </br>
+                  
+                    桂林羅哲初  手抄 </br>
+                  
+                    據廣西人民出版社1980年7月第2版 </br>
+                  </p>
                 </div>
+
+                <div id="new" style="display: inline-block;">
+                  <p>中医瑰宝苑 </br> 
+                    桂林古本伤寒杂病论上 </br>
+                    
+                  汉长沙太守南阳张机仲景  述 </br>
+                  
+                  桂林罗哲初  手抄 </br>
+                  
+                  据广西人民出版社1980年7月第2版 </br>
+                  </p>
+                </div>
+               
+                
               </div>
             </div>
           </div>
@@ -59,6 +87,17 @@
 {% endblock %}
 
 {% block plugins_js %}
-  <script src="../node_modules/summernote/dist/summernote-bs4.js"></script>
-  <script src="../node_modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
+<script src="../node_modules/summernote/dist/summernote-bs4.js"></script>
+<script src="../node_modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
+
+<script>
+  $("#oldhide").click(function(){
+    if($("#old").css("display") == "none")
+      $("#old").css("display","inline-block");
+    else
+      $("#old").css("display","none");
+  });
+
+  $path = "C:\100-桂林古本伤寒杂病论.txt";
+</script>
 {% endblock %}
