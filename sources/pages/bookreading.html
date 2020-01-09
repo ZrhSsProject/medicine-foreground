@@ -11,6 +11,15 @@
 <section class="section">
     <div class="section-header" style="margin:0mm">
       <h1>医法圆通</h1>
+      <span style="margin-left: 30px;">当前页码: <span id="index"></span></span>
+      <nav aria-label="Page navigation example" style="margin-left:30%;">
+        <ul class="pagination">
+          <li class="page-item" id="previous"><a class="page-link">上一页</a></li>         
+          <li class="page-item" id="current" style="line-height: 35px;width: 50px;text-align: center;"><a class="page-link">1</a></li>
+          <li class="page-item" id="next"><a class="page-link">下一页</a></li>
+        </ul>
+      </nav>
+     
       
       <div class="section-header-breadcrumb">
         <!-- 放大/缩小 -->
@@ -24,8 +33,8 @@
         </select>
       </div>
     </div>
-       
-    <input type="range" class="form-control" >
+      
+    <input id="process" type="range" class="form-control" max=100 min=0 value="0" step=1 >
     <div id="totalStyle" style="text-align: center;">
       
    
@@ -59,7 +68,11 @@
         </p>
       </div>
     </div>
-      
+    
+    
+    
+        
+
     </div>
         
       
@@ -74,6 +87,8 @@
 <script src="../node_modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
 
 <script>
+  var pages = 0;
+
   $("#fontchange").change(function(){
     $("#totalStyle").css("font-size",$("#fontchange").val()+"px");
 
@@ -91,26 +106,48 @@
     }
   });
 
-  $path = "C:\100-桂林古本伤寒杂病论.txt";
   
-$(document).ready(function(){
-  fileID = $.session.get('fileID');
-  $.ajax({
-    url:"http://localhost:8081/bookread/"+fileID+"/1",
-    data:{},
-    crossDomain:true,
-    type:"get",
-    dataType:"jsonp",
-    jsonp: "callback",
-    jsonpCallback: "BookReadHandler",
-    success:function(obj) {
-     alert("success");
-     $("#old p").text("");
-     $("#old p").append(obj.res);
-     $("#new p").text("");
-     $("#new p").append(obj.res);
-    }
+  
+  $(document).ready(function(){
+    fileID = $.session.get('fileID');
+    $.ajax({
+      url:"http://localhost:8081/bookread/"+fileID+"/1",
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "BookReadHandler",
+      success:function(obj) {
+        $("#old p").text("");
+        $("#old p").append(obj.res);
+        $("#new p").text("");
+        $("#new p").append(obj.res);
+        // 将书籍的总页数赋值变量，便于后续使用
+        pages = obj.page;
+      }
+    });
   });
-});
+
+// 进度条监听事件，当有输入或属性修改，就会触发这个事件（函数）
+  $('#process').on('input propertychange',function(){
+    // 设置索引，当前页数 = 进度条值/100 * 总页数
+    $("#index").text(parseInt(($('#process').val()/100)*pages) +" / "+pages);
+    $.ajax({
+      url:"http://localhost:8081/bookread/"+fileID+"/"+parseInt(($('#process').val()/100)*pages),
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "BookReadHandler",
+      success:function(obj) {
+      $("#old p").text("");
+      $("#old p").append(obj.res);
+      $("#new p").text("");
+      $("#new p").append(obj.res);
+      }
+    });
+  })
 </script>
 {% endblock %}
