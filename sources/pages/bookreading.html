@@ -1,6 +1,6 @@
 {% set title = '阅览' %}
 {% set page = 'blank.html' %}
-{% extends 'layouts/master.html' %}
+{% extends 'layouts/bookmaster.html' %}
 
 {% block plugins_css %}
   <link rel="stylesheet" href="../node_modules/summernote/dist/summernote-bs4.css">
@@ -9,37 +9,13 @@
 
 {% block content %}
 <section class="section">
-    <div class="section-header" style="margin:0mm">
-      <h1>医法圆通</h1>
-      <span style="margin-left: 30px;">当前页码: <span id="index"></span></span>
-      <nav aria-label="Page navigation example" style="margin-left:30%;">
-        <ul class="pagination">
-          <li class="page-item" id="previous"><a class="page-link">上一页</a></li>         
-          <li class="page-item" id="current" style="line-height: 35px;width: 50px;text-align: center;"><a class="page-link">1</a></li>
-          <li class="page-item" id="next"><a class="page-link">下一页</a></li>
-        </ul>
-      </nav>
-     
       
-      <div class="section-header-breadcrumb">
-        <!-- 放大/缩小 -->
-      <input id="oldhide"  type="button"  value="显示原版" style="margin-right: 5px;" >
-        字号设置
-        <select id="fontchange" style="margin-left: 5px;">
-          <option value="12">小号</option>
-          <option value="14" selected>常规</option>
-          <option value="20">大号</option>
-          <option value="30">特大号</option>
-        </select>
-      </div>
-    </div>
-      
-    <input id="process" type="range" class="form-control" max=100 min=0 value="0" step=1 >
+    <input id="process" type="range" class="form-control" max=100 min=1 value="0" step=1 >
     <div id="totalStyle" style="text-align: center;">
       
    
 
-      <div id="old" class="section-header"  style="display: none;width:45%;height:600px;text-align: left;">
+      <div id="old" class="section-header"  style="display: none;width:45%;height:auto;text-align: left;">
         <p>中醫瑰寶苑 </br> 
           桂林古本傷寒雜病論上 </br>
           
@@ -53,8 +29,8 @@
 
       
       
-      <div id="new" class="section-header"  style="display: inline-block;width:45%;height:600px;text-align: left;">
-        
+      <div id="new" class="section-header"  style="display: inline-block;width:45%;height:auto;text-align: left;">
+        <div style="font: 0px/0px sans-serif;clear: both;display: block"> </div>
         <p id="passage"  >中医瑰宝苑 </br> 
           桂林古本伤寒杂病论上 </br>
           
@@ -88,6 +64,7 @@
 
 <script>
   var pages = 0;
+  var current=1;
 
   $("#fontchange").change(function(){
     $("#totalStyle").css("font-size",$("#fontchange").val()+"px");
@@ -111,7 +88,7 @@
   $(document).ready(function(){
     fileID = $.session.get('fileID');
     $.ajax({
-      url:"http://localhost:8081/bookread/"+fileID+"/1",
+      url:"http://localhost:8081/bookread/"+fileID+"/"+current+"",
       data:{},
       crossDomain:true,
       type:"get",
@@ -125,14 +102,61 @@
         $("#new p").append(obj.res);
         // 将书籍的总页数赋值变量，便于后续使用
         pages = obj.page;
+        $("#current").text(current);
       }
     });
   });
+  $("#previous").click(function(){
+  if(current > 1)
+    current--;
+  $.ajax({
+    url:"http://localhost:8081/bookread/"+fileID+"/"+current+"",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "BookReadHandler",
+    success:function(obj) {
+      $("#old p").text("");
+        $("#old p").append(obj.res);
+        $("#new p").text("");
+        $("#new p").append(obj.res);
+        $("#current").text(current);
+        
+    }
+  });
+});
+
+$("#next").click(function(){
+  current++;
+  $.ajax({
+    url:"http://localhost:8081/bookread/"+fileID+"/"+current+"",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "BookReadHandler",
+    success:function(obj) {
+      if(obj.length == 0){
+        alert("已经是最后一页")
+        current--;
+      }else
+      $("#old p").text("");
+      $("#old p").append(obj.res);
+      $("#new p").text("");
+      $("#new p").append(obj.res);
+      $("#current").text(current);
+    }
+  });
+});
 
 // 进度条监听事件，当有输入或属性修改，就会触发这个事件（函数）
   $('#process').on('input propertychange',function(){
     // 设置索引，当前页数 = 进度条值/100 * 总页数
     $("#index").text(parseInt(($('#process').val()/100)*pages) +" / "+pages);
+    current=parseInt(($('#process').val()/100)*pages);
     $.ajax({
       url:"http://localhost:8081/bookread/"+fileID+"/"+parseInt(($('#process').val()/100)*pages),
       data:{},
@@ -146,8 +170,33 @@
       $("#old p").append(obj.res);
       $("#new p").text("");
       $("#new p").append(obj.res);
+      $("#current").text(current);
       }
     });
   })
+
+
+  //跳转至页面
+  $("#targetindex").keyup(function(){
+    current=$("#targetindex").val();
+    $.ajax({
+    url:"http://localhost:8081/bookread/"+fileID+"/"+ $("#targetindex").val()+"",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "BookReadHandler",
+    success:function(obj) {
+      $("#old p").text("");
+      $("#old p").append(obj.res);
+      $("#new p").text("");
+      $("#new p").append(obj.res);
+      $("#current").text(current);
+    }
+       });
+ 
+  });
+
 </script>
 {% endblock %}
