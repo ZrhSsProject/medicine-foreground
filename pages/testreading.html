@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <title>bookreading</title>
+
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+  <!-- CSS Libraries -->
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <style>
+    #__bs_notify__
+  {display: none !important;}
+  </style>
+</head>
+
+<body class="layout-3">
+  <div id="app">
+    <div class="main-wrapper container">
+      <div class="navbar-bg" style="height:10%;background-color:peru;position: fixed;z-index: 888;"></div>
+      <nav class="navbar navbar-expand-lg main-navbar" style="position: fixed;">
+        <span class="navbar-brand sidebar-gone-hide">医法圆通</span>
+      
+      
+        <button id="oldhide" type="button" class="btn btn-outline-light" style="margin-left: 35%;margin-right: 40%;">显示原版</button>
+     
+        <button type="button" class="btn btn-outline-light"><a href="coverofbook.html" class="nav-link">退出阅读</a></button>
+       
+      </nav>
+      
+
+     
+
+      <!-- Main Content -->
+      <div class="main-content">
+<section class="section">
+      
+  <input id="process" type="range" class="form-control" max=100 min=1 value="0" step=1 >
+  <div id="totalStyle" style="text-align: center;">
+    
+    <div id="old" class="section-header"  style="display: none;width:45%;height:auto;text-align: left;">
+      <p>中醫瑰寶苑 </br> 
+        桂林古本傷寒雜病論上 </br>
+        
+        漢長沙太守南陽張機仲景  述 </br>
+      
+        桂林羅哲初  手抄 </br>
+      
+        據廣西人民出版社1980年7月第2版 據廣西人民出版社1980年7月第2版 據廣西人民出版社1980年7月第2版 </br>
+      </p>
+    </div>
+
+    
+    
+    <div id="new" class="section-header"  style="display: inline-block;width:45%;height:auto;text-align: left;">
+      <div style="font: 0px/0px sans-serif;clear: both;display: block"> </div>
+      <p id="passage"  >中医瑰宝苑 </br> 
+        桂林古本伤寒杂病论上 </br>
+        
+      汉长沙太守南阳张机仲景  述 </br>
+      
+      桂林罗哲初  手抄 </br>
+      
+      据广西人民出版社1980年7月第2版 据广西人民出版社1980年7月第2版 据广西人民出版社1980年7月第2版 </br>
+  
+      
+  
+      
+      
+      
+      </p>
+    </div>
+  </div>
+  
+  
+  
+      
+
+  </div>
+      
+    
+   
+</section>
+      </div>
+      <footer  style="position: fixed;z-index: 888; padding:0px 0px 30px 0px;position:absolute;
+      bottom:5%;width:100%;height:auto;">
+       
+        <nav class="navbar" style="position: fixed;z-index: 888;background-color: white;">
+          <div class="section-header-breadcrumb" style="display:inline-block">
+            <span>字号设置</span>
+            <select id="fontchange" class="btn btn-warning" style="" >
+              <option value="12">小号</option>
+              <option value="14" selected>常规</option>
+              <option value="20">大号</option>
+              <option value="30">特大号</option>
+            </select>
+          </div>
+          
+        
+          <span style="margin-left: 10px;display:inline-block">跳转至: <input id="targetindex" type="text" value=" " style="height: 30px;width: 30px;text-align: center;display:inline-block;"/> <span>页</span></span>
+         
+          <nav aria-label="Page navigation example" >
+            <ul class="pagination">
+              <li class="page-item" id="previous"><button type="button" class="btn btn-outline-light">上一页</button></li>         
+              <li class="page-item" id="current"  style="line-height: 35px;width: 25px;text-align: center;"><a class="page-link">1</a></li>
+              <li class="page-item" id="next"><button type="button" class="btn btn-outline-light">下一页</button></li>
+            </ul>
+          </nav>
+        
+        </nav>
+      </footer>
+    </div>
+  </div>
+
+  <!-- General JS Scripts -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="../assets/js/stisla.js"></script>
+
+  <script src="../assets/js/jquerysession.js"></script>
+
+  <!-- JS Libraies -->
+<script>
+  var pages = 0;
+  var current=1;
+
+  $("#fontchange").change(function(){
+    $("#totalStyle").css("font-size",$("#fontchange").val()+"px");
+
+  });
+
+
+  $("#oldhide").click(function(){
+    if($("#old").css("display") == "none"){
+      $("#old").css("display","inline-block");
+      $("#oldhide").val("隐藏原版");
+    }
+    else{
+    $("#oldhide").val("显示原版");
+    $("#old").css("display","none");
+    }
+  });
+
+  
+  
+  $(document).ready(function(){
+    fileID = $.session.get('fileID');
+    $.ajax({
+      url:"http://localhost:8081/bookread/"+fileID+"/"+current+"",
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "BookReadHandler",
+      success:function(obj) {
+        $("#old p").text("");
+        $("#old p").append(obj.res);
+        $("#new p").text("");
+        $("#new p").append(obj.res);
+        // 将书籍的总页数赋值变量，便于后续使用
+        pages = obj.page;
+        $("#current").text(current);
+      }
+    });
+  });
+
+  $("#previous").click(function(){
+  if(current > 1)
+    current--;
+  $.ajax({
+    url:"http://localhost:8081/bookread/"+fileID+"/"+current+"",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "BookReadHandler",
+    success:function(obj) {
+      $("#old p").text("");
+        $("#old p").append(obj.res);
+        $("#new p").text("");
+        $("#new p").append(obj.res);
+        $("#current").text(current);
+        
+    }
+  });
+  });
+
+$("#next").click(function(){
+  current++;
+  $.ajax({
+    url:"http://localhost:8081/bookread/"+fileID+"/"+current+"",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "BookReadHandler",
+    success:function(obj) {
+      if(obj.length == 0){
+        alert("已经是最后一页")
+        current--;
+      }else
+      $("#old p").text("");
+      $("#old p").append(obj.res);
+      $("#new p").text("");
+      $("#new p").append(obj.res);
+      $("#current").text(current);
+    }
+  });
+  });
+
+// 进度条监听事件，当有输入或属性修改，就会触发这个事件（函数）
+  $('#process').on('input propertychange',function(){
+    // 设置索引，当前页数 = 进度条值/100 * 总页数
+    $("#index").text(parseInt(($('#process').val()/100)*pages) +" / "+pages);
+    current=parseInt(($('#process').val()/100)*pages);
+    $.ajax({
+      url:"http://localhost:8081/bookread/"+fileID+"/"+parseInt(($('#process').val()/100)*pages),
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "BookReadHandler",
+      success:function(obj) {
+      $("#old p").text("");
+      $("#old p").append(obj.res);
+      $("#new p").text("");
+      $("#new p").append(obj.res);
+      $("#current").text(current);
+      }
+    });
+  })
+
+
+  //跳转至页面
+  $("#targetindex").keyup(function(){
+    current=$("#targetindex").val();
+    $.ajax({
+    url:"http://localhost:8081/bookread/"+fileID+"/"+ $("#targetindex").val()+"",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "BookReadHandler",
+    success:function(obj) {
+      $("#old p").text("");
+      $("#old p").append(obj.res);
+      $("#new p").text("");
+      $("#new p").append(obj.res);
+      $("#current").text(current);
+    }
+       });
+ 
+  });
+
+</script>
+
+  <!-- Page Specific JS File -->
+
+  <!-- Template JS File -->
+  <script src="../assets/js/scripts.js"></script>
+  <script src="../assets/js/custom.js"></script>
+</body>
+</html>
