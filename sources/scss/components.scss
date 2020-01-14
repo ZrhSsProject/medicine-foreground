@@ -150,3 +150,10 @@
     left:20%;
 }
 
+.selectgroup-input:checked + .selectgroup-button {
+    background-color:rgb(226, 149, 71);
+}
+
+.main-sidebar .sidebar-menu li.active a{
+    color:rgb(226, 149, 71);
+}

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>bookreading</title>
+  <title>reading</title>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -38,54 +38,28 @@
      
 
       <!-- Main Content -->
-      <div class="main-content">
-<section class="section">
-      
-  <input id="process" type="range" class="form-control" max=100 min=1 value="0" step=1 >
+      <input id="process" type="range" class="form-control" max=100 min=1 value="0" step=1 style="width:90%;position: fixed;z-index: 888;margin-top: 5%;">
+      <div class="main-content" style="padding-top: 10%;">
+<section class="section" >
+
   <div id="totalStyle" style="text-align: center;">
     
-    <div id="old" class="section-header"  style="display: none;width:45%;height:auto;text-align: left;">
-      <p>中醫瑰寶苑 </br> 
-        桂林古本傷寒雜病論上 </br>
-        
-        漢長沙太守南陽張機仲景  述 </br>
-      
-        桂林羅哲初  手抄 </br>
-      
-        據廣西人民出版社1980年7月第2版 據廣西人民出版社1980年7月第2版 據廣西人民出版社1980年7月第2版 </br>
+    <div id="old" class="section-header"  style="float:left; display: none;width:45%;height:auto;text-align: left;">
+      <p> 
+        <img id="pic" src="#" width="100%" />
+        <!-- <a class="media" href=""></a>   -->
       </p>
     </div>
 
-    
     
     <div id="new" class="section-header"  style="display: inline-block;width:45%;height:auto;text-align: left;">
-      <div style="font: 0px/0px sans-serif;clear: both;display: block"> </div>
-      <p id="passage"  >中医瑰宝苑 </br> 
-        桂林古本伤寒杂病论上 </br>
-        
-      汉长沙太守南阳张机仲景  述 </br>
-      
-      桂林罗哲初  手抄 </br>
-      
-      据广西人民出版社1980年7月第2版 据广西人民出版社1980年7月第2版 据广西人民出版社1980年7月第2版 </br>
-  
-      
-  
-      
-      
-      
+      <p id="passage"  >
       </p>
     </div>
   </div>
-  
-  
-  
-      
 
   </div>
-      
-    
-   
+
 </section>
       </div>
       <footer  style="position: fixed;z-index: 888; padding:0px 0px 30px 0px;position:absolute;
@@ -94,7 +68,7 @@
         <nav class="navbar" style="position: fixed;z-index: 888;background-color: white;">
           <div class="section-header-breadcrumb" style="display:inline-block">
             <span>字号设置</span>
-            <select id="fontchange" class="btn btn-warning" style="" >
+            <select id="fontchange" class="btn btn-secondary" >
               <option value="12">小号</option>
               <option value="14" selected>常规</option>
               <option value="20">大号</option>
@@ -102,8 +76,8 @@
             </select>
           </div>
           
-        
-          <span style="margin-left: 10px;display:inline-block">跳转至: <input id="targetindex" type="text" value=" " style="height: 30px;width: 30px;text-align: center;display:inline-block;"/> <span>页</span></span>
+          <span id="index" style="margin-left: 10px;"></span>
+          <span style="display:inline-block">跳转至: <input id="targetindex" type="text" value=" " style="height: 30px;width: 30px;text-align: center;display:inline-block;  border: 1px solid #bfc0cc6c"/> <span>页</span></span>
          
           <nav aria-label="Page navigation example" >
             <ul class="pagination">
@@ -126,99 +100,101 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="../assets/js/stisla.js"></script>
 
+  <script type="text/javascript" src="../assets/js/jquery.media.js"></script>
   <script src="../assets/js/jquerysession.js"></script>
+  <script src="../assets/js/UTIF.js"></script>
+
 
   <!-- JS Libraies -->
 <script>
+  
   var pages = 0;
   var current=1;
 
   $("#fontchange").change(function(){
     $("#totalStyle").css("font-size",$("#fontchange").val()+"px");
-
   });
 
 
   $("#oldhide").click(function(){
     if($("#old").css("display") == "none"){
       $("#old").css("display","inline-block");
-      $("#oldhide").val("隐藏原版");
+      $("#oldhide").text("隐藏原版");
     }
     else{
-    $("#oldhide").val("显示原版");
+    $("#oldhide").text("显示原版");
     $("#old").css("display","none");
     }
   });
 
-  
+  function change(obj){
+    $("#pic").attr("src",obj.url);
+    UTIF.replaceIMG();
+    $("#new p").text("");
+    $("#new p").append(obj.res);
+    // 将书籍的总页数赋值变量，便于后续使用
+    pages = obj.pages;
+    $("#current").text(current);
+    $("#index").text("总页数："+pages);
+  }
   
   $(document).ready(function(){
     fileID = $.session.get('fileID');
     $.ajax({
-      url:"http://localhost:8081/bookread/"+fileID+"/"+current+"",
+      url:"http://localhost:8081/bookhandle/"+fileID+"/"+current+"",
       data:{},
       crossDomain:true,
       type:"get",
       dataType:"jsonp",
       jsonp: "callback",
-      jsonpCallback: "BookReadHandler",
+      jsonpCallback: "BookHandleHandler",
       success:function(obj) {
-        $("#old p").text("");
-        $("#old p").append(obj.res);
-        $("#new p").text("");
-        $("#new p").append(obj.res);
-        // 将书籍的总页数赋值变量，便于后续使用
-        pages = obj.page;
-        $("#current").text(current);
+        change(obj);
+      
       }
     });
   });
 
+
+
   $("#previous").click(function(){
-  if(current > 1)
+  if(current > 1){
     current--;
-  $.ajax({
-    url:"http://localhost:8081/bookread/"+fileID+"/"+current+"",
-    data:{},
-    crossDomain:true,
-    type:"get",
-    dataType:"jsonp",
-    jsonp: "callback",
-    jsonpCallback: "BookReadHandler",
-    success:function(obj) {
-      $("#old p").text("");
-        $("#old p").append(obj.res);
-        $("#new p").text("");
-        $("#new p").append(obj.res);
-        $("#current").text(current);
-        
-    }
-  });
-  });
+    $.ajax({
+      url:"http://localhost:8081/bookhandle/"+fileID+"/"+current+"",
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "BookHandleHandler",
+      success:function(obj) {
+        change(obj);
+      }
+    });
+  }else{
+    alert("已经是首页");
+  }
+});
 
 $("#next").click(function(){
-  current++;
-  $.ajax({
-    url:"http://localhost:8081/bookread/"+fileID+"/"+current+"",
-    data:{},
-    crossDomain:true,
-    type:"get",
-    dataType:"jsonp",
-    jsonp: "callback",
-    jsonpCallback: "BookReadHandler",
-    success:function(obj) {
-      if(obj.length == 0){
-        alert("已经是最后一页")
-        current--;
-      }else
-      $("#old p").text("");
-      $("#old p").append(obj.res);
-      $("#new p").text("");
-      $("#new p").append(obj.res);
-      $("#current").text(current);
-    }
-  });
-  });
+  if(current < pages){
+    current++;
+    $.ajax({
+      url:"http://localhost:8081/bookhandle/"+fileID+"/"+current+"",
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "BookHandleHandler",
+      success:function(obj) {
+          change(obj);
+      }
+    });
+  }else
+    alert("已经是最后一页");
+});
 
 // 进度条监听事件，当有输入或属性修改，就会触发这个事件（函数）
   $('#process').on('input propertychange',function(){
@@ -226,19 +202,15 @@ $("#next").click(function(){
     $("#index").text(parseInt(($('#process').val()/100)*pages) +" / "+pages);
     current=parseInt(($('#process').val()/100)*pages);
     $.ajax({
-      url:"http://localhost:8081/bookread/"+fileID+"/"+parseInt(($('#process').val()/100)*pages),
+      url:"http://localhost:8081/bookhandle/"+fileID+"/"+parseInt(($('#process').val()/100)*pages),
       data:{},
       crossDomain:true,
       type:"get",
       dataType:"jsonp",
       jsonp: "callback",
-      jsonpCallback: "BookReadHandler",
+      jsonpCallback: "BookHandleHandler",
       success:function(obj) {
-      $("#old p").text("");
-      $("#old p").append(obj.res);
-      $("#new p").text("");
-      $("#new p").append(obj.res);
-      $("#current").text(current);
+        change(obj);
       }
     });
   })
@@ -248,19 +220,15 @@ $("#next").click(function(){
   $("#targetindex").keyup(function(){
     current=$("#targetindex").val();
     $.ajax({
-    url:"http://localhost:8081/bookread/"+fileID+"/"+ $("#targetindex").val()+"",
+    url:"http://localhost:8081/bookhandle/"+fileID+"/"+ $("#targetindex").val()+"",
     data:{},
     crossDomain:true,
     type:"get",
     dataType:"jsonp",
     jsonp: "callback",
-    jsonpCallback: "BookReadHandler",
+    jsonpCallback: "BookHandleHandler",
     success:function(obj) {
-      $("#old p").text("");
-      $("#old p").append(obj.res);
-      $("#new p").text("");
-      $("#new p").append(obj.res);
-      $("#current").text(current);
+      change(obj);
     }
        });
  

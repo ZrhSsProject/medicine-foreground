@@ -1769,3 +1769,9 @@ tr:first-child > td > .fc-day-grid-event {
   width: 45px;
   line-height: 35px;
   left: 20%; }
+
+.selectgroup-input:checked + .selectgroup-button {
+  background-color: #e29547; }
+
+.main-sidebar .sidebar-menu li.active a {
+  color: #e29547; }

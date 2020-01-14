@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>bookreading</title>
+  <title>reading</title>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -42,7 +42,8 @@
      
 
       <!-- Main Content -->
-      <div class="main-content">
+      <input id="process" type="range" class="form-control" max=100 min=1 value="0" step=1 style="width:90%;position: fixed;z-index: 888;margin-top: 5%;">
+      <div class="main-content" style="padding-top: 10%;">
 {% block content %}{% endblock %}
       </div>
       <footer  style="position: fixed;z-index: 888; padding:0px 0px 30px 0px;position:absolute;
@@ -51,7 +52,7 @@
         <nav class="navbar" style="position: fixed;z-index: 888;background-color: white;">
           <div class="section-header-breadcrumb" style="display:inline-block">
             <span>字号设置</span>
-            <select id="fontchange" class="btn btn-warning" style="" >
+            <select id="fontchange" class="btn btn-secondary" >
               <option value="12">小号</option>
               <option value="14" selected>常规</option>
               <option value="20">大号</option>
@@ -59,8 +60,8 @@
             </select>
           </div>
           
-        
-          <span style="margin-left: 10px;display:inline-block">跳转至: <input id="targetindex" type="text" value=" " style="height: 30px;width: 30px;text-align: center;display:inline-block;"/> <span>页</span></span>
+          <span id="index" style="margin-left: 10px;"></span>
+          <span style="display:inline-block">跳转至: <input id="targetindex" type="text" value=" " style="height: 30px;width: 30px;text-align: center;display:inline-block;  border: 1px solid #bfc0cc6c"/> <span>页</span></span>
          
           <nav aria-label="Page navigation example" >
             <ul class="pagination">
@@ -84,7 +85,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="../assets/js/stisla.js"></script>
 
+  <script type="text/javascript" src="../assets/js/jquery.media.js"></script>
   <script src="../assets/js/jquerysession.js"></script>
+  <script src="../assets/js/UTIF.js"></script>
+
 
   <!-- JS Libraies -->
 {% block plugins_js %}{% endblock %}
