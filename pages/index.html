@@ -75,8 +75,12 @@
                 <a href="specialknowledgebase.html" class="nav-link"><i class="fas fa-th-large"></i> <span>专题资料库</span></a>
               </li>
               <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i> <span>用户中心</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i> <span>个人中心</span></a>
                 <ul class="dropdown-menu">
+                    <li><a href="#">我的收藏</a></li>
+                    <li><a href="#">我的评论</a></li>
+                    <li><a href="#">我的笔记</a></li>
+
                     <li><a href="auth-login.html">登录</a></li>
                     <li><a href="auth-register.html">注册</a></li>
                     <li><a href="auth-forgot-password.html">忘记密码</a></li>
@@ -142,7 +146,7 @@
       
     <div class="card">
       <div class="card-header">
-        <h4 style="color:tomato">热门书籍</h4>
+        <h4 id="navTitle" style="color:tomato">热门书籍</h4>
         <div class="card-header-action">
           <a href="catalog-browse.html" class="btn btn-warning" >浏览更多<i class="fas fa-chevron-right"></i></a>
         </div>
@@ -259,10 +263,6 @@
 
   </section>
 
-  <form method="post" id="form" style="display: none;" action="coverofbook.html">
-      <input name="fileID" type='hidden' />
-      <input id="submit" type="submit" />
-  </form>
         
       </div>
       <footer class="main-footer">
@@ -290,8 +290,13 @@ var simplesearchHandler = function () {};
 var current = 0;
 var num=4;
 
-function detail(fileID){
+function detail(fileID,fileName,author,edition,press){
   $.session.set('fileID', fileID);
+  $.session.set('fileName', fileName);
+  $.session.set('author', author);
+  $.session.set('edition', edition);
+  $.session.set('press', press);
+
   window.location.href = "coverofbook.html";
 }
 
@@ -315,7 +320,11 @@ function modify(obj){
     else if(index % 7 == 6){
       $(this).text("");
       fileID = obj[parseInt(index/7)].fileID;
-      $(this).append("<a href='javascript:void(0);' onclick='detail("+fileID+")' class='btn btn-success'>查看</a>");
+      fileName=obj[parseInt(index/7)].fileName;
+      author=obj[parseInt(index/7)].author;
+      edition=obj[parseInt(index/7)].edition;
+      press=obj[parseInt(index/7)].press;
+      $(this).append("<a href='javascript:void(0);' onclick=\"detail('"+fileID+"','"+fileName+"','"+author+"','"+edition+"','"+press+"')\" class='btn btn-success'>查看</a>");
     }
     index++;
   });
@@ -374,6 +383,7 @@ $("#next").click(function(){
 });
 
 $("#simplesearch").click(function(){
+  $("#navTitle").text("搜索结果");
   $.ajax({
     url:"http://localhost:8081/simpleSearch/"+$("#select").val()+"/"+$("#querydata").val()+"",
     data:{},

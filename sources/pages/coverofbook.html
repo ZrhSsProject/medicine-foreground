@@ -58,6 +58,17 @@
 <script type="text/javascript">
   $(document).ready(function(){
     fileID = $.session.get('fileID');
+    fileName=$.session.get("fileName");
+    author=$.session.get("author");
+    edition=$.session.get("edition");
+    press=$.session.get("press");
+
+    $("#fileName").text(fileName);
+    $("#author").text(author+"著");
+    $("#edition").text(edition);
+    $("#press").text(press);
+
+
     $.ajax({
     url:"http://localhost:8081/BookDetail/"+fileID,
     data:{},
@@ -69,7 +80,7 @@
     success:function(obj) {
       $("#home").text(obj.introduce);
       $("#profile").text(obj.list);
-      $("#fileName").text(obj.fileName);
+   
     }
   });
   });

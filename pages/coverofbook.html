@@ -75,8 +75,12 @@
                 <a href="specialknowledgebase.html" class="nav-link"><i class="fas fa-th-large"></i> <span>专题资料库</span></a>
               </li>
               <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i> <span>用户中心</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i> <span>个人中心</span></a>
                 <ul class="dropdown-menu">
+                    <li><a href="#">我的收藏</a></li>
+                    <li><a href="#">我的评论</a></li>
+                    <li><a href="#">我的笔记</a></li>
+
                     <li><a href="auth-login.html">登录</a></li>
                     <li><a href="auth-register.html">注册</a></li>
                     <li><a href="auth-forgot-password.html">忘记密码</a></li>
@@ -170,6 +174,17 @@
 <script type="text/javascript">
   $(document).ready(function(){
     fileID = $.session.get('fileID');
+    fileName=$.session.get("fileName");
+    author=$.session.get("author");
+    edition=$.session.get("edition");
+    press=$.session.get("press");
+
+    $("#fileName").text(fileName);
+    $("#author").text(author+"著");
+    $("#edition").text(edition);
+    $("#press").text(press);
+
+
     $.ajax({
     url:"http://localhost:8081/BookDetail/"+fileID,
     data:{},
@@ -181,7 +196,7 @@
     success:function(obj) {
       $("#home").text(obj.introduce);
       $("#profile").text(obj.list);
-      $("#fileName").text(obj.fileName);
+   
     }
   });
   });
