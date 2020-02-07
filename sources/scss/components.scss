@@ -157,3 +157,9 @@
 .main-sidebar .sidebar-menu li.active a{
     color:rgb(226, 149, 71);
 }
+.accordion .accordion-header[aria-expanded="true"]{
+    background-color: rgb(226, 149, 71);
+}
+body.sidebar-mini .main-sidebar .sidebar-menu > li.active > a {
+    background-color: rgb(226, 149, 71);
+}

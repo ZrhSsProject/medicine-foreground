@@ -60,6 +60,11 @@
             </select>
           </div>
           
+          <div class="accordion-header btn btn-secondary" role="button" data-toggle="collapse" data-target="#panel-body-1" aria-expanded="true" style="display: inline-block;height: 30px">
+            <span>评论</span>
+          </div>
+        
+          
           <span id="index" style="margin-left: 10px;"></span>
           <span style="display:inline-block">跳转至: <input id="targetindex" type="text" value=" " style="height: 30px;width: 30px;text-align: center;display:inline-block;  border: 1px solid #bfc0cc6c"/> <span>页</span></span>
          
@@ -73,6 +78,30 @@
         
         </nav>
       </footer>
+    </div>
+    <div class="accordion" id="accordion">
+      <div class="accordion-body collapse " id="panel-body-1" data-parent="#accordion" style="z-index: 1000;position: fixed;top:20%;left:35%;width:30%;">
+        <div class="row">
+          <div style="width:100%">
+              <div class="card" style="background-color: rgb(182, 158, 121);">
+                    <div class="card-body pb-0">
+                        <div class="form-group">
+                          <label>标题</label>
+                          <input type="text" name="title" id="commenttitle" class="form-control" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off">
+                        </div>
+                        <div class="form-group">
+                          <label>内容</label>
+                          <textarea name="content"  id="commentcontent" class="form-control" style=" min-height: 150px;"  spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></textarea>
+                          <!-- <textarea class="summernote-simple"></textarea> -->
+                        </div>
+                    </div>
+                    <div class="card-footer pt-0">
+                      <button class="btn btn-warning" style="float:right" onclick="comment()" >发表评论</button>
+                    </div>
+              </div>
+          </div>
+        </div>
+      </div>
     </div>
 {% endif %}
   </div>

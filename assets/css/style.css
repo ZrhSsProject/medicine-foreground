@@ -3008,3 +3008,6 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
   100% {
     -webkit-transform: scale(1.2, 1.2);
     opacity: 0.0; } }
+
+.sidebar-mini .main-sidebar .sidebar-menu > li.active > a {
+  background-color: #e29547; }

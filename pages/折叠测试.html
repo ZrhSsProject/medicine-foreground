@@ -35,7 +35,7 @@
         <ul class="navbar-nav navbar-right">
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
             <img alt="image" src="../assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-            <div class="d-sm-none d-lg-inline-block">你好，用户</div></a>
+            <div id="username" class="d-sm-none d-lg-inline-block"></div></a>
             <div class="dropdown-menu dropdown-menu-right">
               <div class="dropdown-title">五分钟前登录</div>
             
@@ -46,7 +46,7 @@
                 <i class="fas fa-cog"></i> 修改密码
               </a>
               <div class="dropdown-divider"></div>
-              <a href="auth-login.html" class="dropdown-item has-icon text-danger">
+              <a href="auth-login.html" onclick="exitindex()" class="dropdown-item has-icon text-danger">
                 <i class="fas fa-sign-out-alt"></i> 退出
               </a>
             </div>
@@ -77,6 +77,7 @@
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i> <span>个人中心</span></a>
                 <ul class="dropdown-menu">
+                    <li><a href="#">我的账户</a></li>
                     <li><a href="#">我的收藏</a></li>
                     <li><a href="#">我的评论</a></li>
                     <li><a href="#">我的笔记</a></li>
@@ -87,12 +88,27 @@
                     <li><a href="auth-reset-password.html">重置密码</a></li>
                   </ul>
               </li>
+
               <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-map-marker-alt"></i> <span>联系我们</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i> <span>系统管理</span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">用户管理</a></li>
+                    <li><a href="#">评论管理</a></li>
+                    <li><a href="#">知识可视化</a></li>
+                    <li><a href="#">用户行为分析</a></li>
+                    <li><a href="#">访问统计</a></li>
+                   
+                </ul>
               </li>
+
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-plug"></i> <span>帮助文档</span></a>
               </li>
+
+              <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-map-marker-alt"></i> <span>联系我们</span></a>
+              </li>
+           
               
               
 
@@ -103,27 +119,19 @@
       <!-- Main Content -->
       <div class="main-content">
   <section>
-      <div class="col-12 col-md-6 col-lg-6">
-            <div class="card-body">
-              <div id="accordion">
-                <div class="accordion">
-                  <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-1" aria-expanded="true">
-                    <h4>原文</h4>
+  <div style="height: 100px;"></div>
+                  <div class="accordion" id="accordion">
+                     
+                        <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-1" aria-expanded="true" style="width:60px;position: absolute;top:30%;">
+                          <h4>评论</h4>
+                        </div>
                   </div>
-                  <div class="accordion-body collapse show" id="panel-body-1" data-parent="#accordion">
-                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      
+
+  
+                  <h4>test</h4>
+                  <h4>test</h4>
+                  <h4>test</h4>
+                  <h4>test</h4>
   </section>
 
         
@@ -145,6 +153,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="../assets/js/stisla.js"></script>
   <script src="../assets/js/jquerysession.js"></script>
+  <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
   <!-- JS Libraies -->
 
@@ -153,5 +162,16 @@
   <script src="../assets/js/custom.js"></script>
 
   <!-- Page Specific JS File -->
+<script>
+  $("#username").text("你好,"+$.session.get('userName'));
+  function exitindex(){
+    $.session.remove("userID");
+  }
+
+  function check(){
+    if($.session.get('userID') == null)
+      window.location.href="auth-login.html";
+  }
+</script>
 </body>
 </html>

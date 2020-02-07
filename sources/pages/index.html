@@ -4,24 +4,7 @@
 
 {% block content %}
   <section>
-    
-    <div class="form-group" style="display: inline-block;margin-left: 30%;">
-      <select id="select" class="form-control" style="padding:5px 5px;">
-        <option>书名</option>
-        <option>作者</option>
-        <option>译者</option>
-        <option>关键词</option>
-      </select>
-    </div>
-    
-    <div class="card-header-form" style="display: inline-block;">
-          <div class="input-group">
-            <input id="querydata" type="text" class="form-control" placeholder="Search" >
-            <a href="#"><button id ="simplesearch" class="btn btn-warning" style="height:40px;" ><i class="fas fa-search"></i></button></a>
-          </div>
-    </div>
-      
-    <div class="form-group" style="margin-left: 30%;">
+    <div class="form-group" style="margin-left: 10%;float: left;">
       <label class="d-block">跨库</label>
       <div class="form-check form-check-inline">
         <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
@@ -44,8 +27,24 @@
         <label class="form-check-label" for="inlineCheckbox3">专利</label>
       </div>
     </div>
+
+    <div class="form-group" style="display: inline-block;margin-left: 10%;float: left;">
+      <select id="select" class="form-control" style="padding:5px 5px;">
+        <option>书名</option>
+        <option>作者</option>
+        <option>译者</option>
+        <option>关键词</option>
+      </select>
+    </div>
+    
+    <div class="card-header-form" style="display: inline-block;float: left;">
+          <div class="input-group">
+            <input id="querydata" type="text" class="form-control" placeholder="Search" >
+            <a href="#"><button id ="simplesearch" class="btn btn-warning" style="height:40px;" ><i class="fas fa-search"></i></button></a>
+          </div>
+    </div>
       
-    <div class="card">
+    <div class="card" style="clear:both;">
       <div class="card-header">
         <h4 id="navTitle" style="color:tomato">热门书籍</h4>
         <div class="card-header-action">
@@ -66,12 +65,12 @@
             </tr>
             <tr>
               <td></td>
-              <td><a href="#">INV-87239</a></td>
-              <td class="font-weight-600">李时珍</td>
-              <td>第二版</td>
-              <td>66</td>
+              <td><a href="#"></a></td>
+              <td class="font-weight-600"></td>
+              <td></td>
+              <td></td>
               <td>
-                6
+                
               </td>
               <td>
                   <a href="#" class="btn btn-success">查看</a>
@@ -129,19 +128,6 @@
                 
               </td>
             </tr>
-            <tr>
-              <td></td>
-              <td><a href="#">INV-87320</a></td>
-              <td class="font-weight-600">李时珍</td>
-              <td></td>
-              <td>22</td>
-              <td>
-                2
-              </td>
-              <td>
-                  <a href="#" class="btn btn-success">查看</a>
-              </td>
-            </tr>
           </table>
         </div>
       </div>
@@ -151,6 +137,7 @@
         <div class="card-body" >
           <nav aria-label="Page navigation example" style="float:right;">
             <ul class="pagination">
+              <li class="page-item" style="line-height: 35px;text-align: center;padding-right: 10px;font-weight: bolder;" id="allnum">共 10 页</li>
               <li class="page-item" id="previous"><a class="page-link">上一页</a></li>         
               <li class="page-item" id="current" style="line-height: 35px;width: 20px;text-align: center;"><a class="page-link">1</a></li>
               <li class="page-item" id="next"><a class="page-link">下一页</a></li>
@@ -172,7 +159,7 @@
 var MainHandler = function () {}; 
 var simplesearchHandler = function () {};
 var current = 0;
-var num=4;
+var num=5;
 
 function detail(fileID,fileName,author,edition,press){
   $.session.set('fileID', fileID);
@@ -216,6 +203,7 @@ function modify(obj){
 }
 
 $(document).ready(function(){
+  check();
   $.ajax({
     url:"http://localhost:8081/Main/"+current*num+"/"+num+"",
     data:{},
@@ -267,9 +255,11 @@ $("#next").click(function(){
 });
 
 $("#simplesearch").click(function(){
+  if($("#querydata").val() == "")
+    location.reload();
   $("#navTitle").text("搜索结果");
   $.ajax({
-    url:"http://localhost:8081/simpleSearch/"+$("#select").val()+"/"+$("#querydata").val()+"",
+    url:"http://localhost:8081/simpleSearch/"+$("#select").val()+"/"+$("#querydata").val()+"/"+current*num+"/"+num,
     data:{},
     crossDomain:true,
     type:"get",
@@ -277,7 +267,11 @@ $("#simplesearch").click(function(){
     jsonp: "callback",
     jsonpCallback: "simplesearchHandler",
     success:function(obj) {
-     modify(obj);
+     modify(obj.file);
+     if(obj.count%5 == 0)
+        $("#allnum").text("共 "+parseInt(obj.count/5)+" 页");
+     else
+        $("#allnum").text("共 "+parseInt(obj.count/5+1)+" 页");
     }
   });
 });

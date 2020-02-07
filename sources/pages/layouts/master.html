@@ -39,7 +39,7 @@
         <ul class="navbar-nav navbar-right">
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
             <img alt="image" src="../assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-            <div class="d-sm-none d-lg-inline-block">你好，用户</div></a>
+            <div id="username" class="d-sm-none d-lg-inline-block"></div></a>
             <div class="dropdown-menu dropdown-menu-right">
               <div class="dropdown-title">五分钟前登录</div>
             
@@ -50,7 +50,7 @@
                 <i class="fas fa-cog"></i> 修改密码
               </a>
               <div class="dropdown-divider"></div>
-              <a href="auth-login.html" class="dropdown-item has-icon text-danger">
+              <a href="auth-login.html" onclick="exitindex()" class="dropdown-item has-icon text-danger">
                 <i class="fas fa-sign-out-alt"></i> 退出
               </a>
             </div>
@@ -91,6 +91,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="../assets/js/stisla.js"></script>
   <script src="../assets/js/jquerysession.js"></script>
+  <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
   <!-- JS Libraies -->
 {% block plugins_js %}{% endblock %}
@@ -100,6 +101,18 @@
   <script src="../assets/js/custom.js"></script>
 
   <!-- Page Specific JS File -->
-{% block page_js %}{% endblock %}
+{% block page_js %}
+<script>
+  $("#username").text("你好,"+$.session.get('userName'));
+  function exitindex(){
+    $.session.remove("userID");
+  }
+
+  function check(){
+    if($.session.get('userID') == null)
+      window.location.href="auth-login.html";
+  }
+</script>
+{% endblock %}
 </body>
 </html>

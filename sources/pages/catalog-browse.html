@@ -6,89 +6,98 @@
   <section>
     <div class="form-group">
       <label class="form-label">书籍类别</label>
-      <div class="selectgroup selectgroup-pills">
+      <div id="booktype" class="selectgroup selectgroup-pills">
         <label class="selectgroup-item" >
-          <input type="checkbox" name="value" value="HTML"  class="selectgroup-input" checked="">
+          <input type="radio" name="types" value="全部"  class="selectgroup-input" checked="">
+          <span class="selectgroup-button">全部</span>
+        </label>
+        <label class="selectgroup-item" >
+          <input type="radio" name="types" value="内科"  class="selectgroup-input">
           <span class="selectgroup-button">内科</span>
         </label>
         <label class="selectgroup-item">
-          <input type="checkbox" name="value" value="CSS" class="selectgroup-input">
+          <input type="radio" name="types" value="外科" class="selectgroup-input">
           <span class="selectgroup-button">外科</span>
         </label>
         <label class="selectgroup-item">
-          <input type="checkbox" name="value" value="PHP" class="selectgroup-input">
+          <input type="radio" name="types" value="儿科" class="selectgroup-input">
           <span class="selectgroup-button">儿科</span>
         </label>
         <label class="selectgroup-item">
-          <input type="checkbox" name="value" value="JavaScript" class="selectgroup-input">
+          <input type="radio" name="types" value="妇科" class="selectgroup-input">
           <span class="selectgroup-button">妇科</span>
         </label>
         <label class="selectgroup-item">
-          <input type="checkbox" name="value" value="Ruby" class="selectgroup-input">
+          <input type="radio" name="types" value="针灸科" class="selectgroup-input">
           <span class="selectgroup-button">针灸科</span>
         </label>
         <label class="selectgroup-item">
-          <input type="checkbox" name="value" value="Ruby" class="selectgroup-input">
+          <input type="radio" name="types" value="五官科" class="selectgroup-input">
           <span class="selectgroup-button">五官科</span>
         </label>
         <label class="selectgroup-item">
-          <input type="checkbox" name="value" value="C++" class="selectgroup-input">
+          <input type="radio" name="types" value="骨伤科" class="selectgroup-input">
           <span class="selectgroup-button">骨伤科</span>
         </label>
        
         <label class="selectgroup-item">
-            <input type="checkbox" name="value" value="C++" class="selectgroup-input">
+            <input type="radio" name="types" value="综合" class="selectgroup-input">
             <span class="selectgroup-button">综合</span>
         </label>
         <label class="selectgroup-item">
-            <input type="checkbox" name="value" value="C++" class="selectgroup-input">
+            <input type="radio" name="types" value="其他" class="selectgroup-input">
             <span class="selectgroup-button">其他</span>
         </label>
+      </div>
+    </div>
 
-      <div class="form-group">
+    <div class="form-group">
       <label class="form-label" style="display: block;">时期</label>
       <div class="selectgroup selectgroup-pills">
         <label class="selectgroup-item">
-          <input type="checkbox" name="value" value="HTML" class="selectgroup-input" checked="">
+          <input type="radio" name="age" value="全部" class="selectgroup-input" checked="">
+          <span class="selectgroup-button">全部</span>
+        </label>
+        <label class="selectgroup-item">
+          <input type="radio" name="age" value="秦" class="selectgroup-input">
           <span class="selectgroup-button">秦</span>
         </label>
         <label class="selectgroup-item">
-          <input type="checkbox" name="value" value="CSS" class="selectgroup-input">
+          <input type="radio" name="age" value="汉" class="selectgroup-input">
           <span class="selectgroup-button">汉</span>
         </label>
         <label class="selectgroup-item">
-          <input type="checkbox" name="value" value="PHP" class="selectgroup-input">
+          <input type="radio" name="age" value="三国" class="selectgroup-input">
           <span class="selectgroup-button">三国</span>
         </label>
         <label class="selectgroup-item">
-          <input type="checkbox" name="value" value="JavaScript" class="selectgroup-input">
+          <input type="radio" name="age" value="JavaScript" class="selectgroup-input">
           <span class="selectgroup-button">晋</span>
         </label>
         <label class="selectgroup-item">
-          <input type="checkbox" name="value" value="Ruby" class="selectgroup-input">
+          <input type="radio" name="age" value="隋" class="selectgroup-input">
           <span class="selectgroup-button">隋</span>
         </label>
         <label class="selectgroup-item">
-          <input type="checkbox" name="value" value="Ruby" class="selectgroup-input">
+          <input type="radio" name="age" value="唐" class="selectgroup-input">
           <span class="selectgroup-button">唐</span>
         </label>
         <label class="selectgroup-item">
-          <input type="checkbox" name="value" value="C++" class="selectgroup-input">
+          <input type="radio" name="age" value="宋" class="selectgroup-input">
           <span class="selectgroup-button">宋</span>
         </label>
         <label class="selectgroup-item">
-          <input type="checkbox" name="value" value="C++" class="selectgroup-input">
+          <input type="radio" name="age" value="元" class="selectgroup-input">
           <span class="selectgroup-button">元</span>
         </label>
         <label class="selectgroup-item">
-          <input type="checkbox" name="value" value="C++" class="selectgroup-input">
+          <input type="radio" name="age" value="明" class="selectgroup-input">
           <span class="selectgroup-button">明</span>
         </label>
         <label class="selectgroup-item">
-          <input type="checkbox" name="value" value="C++" class="selectgroup-input">
+          <input type="radio" name="age" value="清" class="selectgroup-input">
           <span class="selectgroup-button">清</span>
         </label>
-      </div>
       </div>
     </div>
 
@@ -229,3 +238,10 @@
         
 {% endblock %}
 
+{% block plugins_js %}
+<script type="text/javascript">
+
+$(document).ready(function(){
+});
+</script>
+{% endblock %}

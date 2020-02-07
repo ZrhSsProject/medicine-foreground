@@ -1775,3 +1775,9 @@ tr:first-child > td > .fc-day-grid-event {
 
 .main-sidebar .sidebar-menu li.active a {
   color: #e29547; }
+
+.accordion .accordion-header[aria-expanded="true"] {
+  background-color: #e29547; }
+
+body.sidebar-mini .main-sidebar .sidebar-menu > li.active > a {
+  background-color: #e29547; }

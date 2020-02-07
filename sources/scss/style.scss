@@ -79,4 +79,6 @@
 /* 4.5 Animation */
 @import "theme/animation";
 
-
+.sidebar-mini .main-sidebar .sidebar-menu > li.active > a {
+    background-color: rgb(226, 149, 71);
+}

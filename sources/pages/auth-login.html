@@ -82,13 +82,45 @@
       </div>
     </section>
     
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                  <h4 class="modal-title" id="myModalLabel"></h4>
+              </div>
+              <div class="modal-body" style="margin-left: 10%;">用户名或密码不正确</div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+              </div>
+          </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+    
 {% endblock %}
 
 {% block plugins_js %}
 <script type="text/javascript">
+  function refresh(){
+    if($.cookie('username') == null){
+      $("#email").val("");
+      $("#password").val("");
+    }else{
+      $("#email").val($.cookie('username'));
+      $("#password").val($.cookie('password'));
+    }
+  }
+
+  $(document).ready(function(){
+    refresh();
+  });
+
   $("#logins").click(function(){
-    alert($("#email").val());
-    alert($("#password").val());
+    if($("#remember-me").is(':checked')){
+      $.cookie('username', $("#email").val(), { expires: 7 });
+      $.cookie('password', $("#password").val(), { expires: 7 });
+    } 
     $.ajax({
       url:"http://localhost:8081/login/"+$("#email").val()+"/"+$("#password").val()+"",
       data:{},
@@ -98,12 +130,17 @@
       jsonp: "callback",
       jsonpCallback: "LoginHandler",
       success:function(obj) {
-        alert("success");
-        alert(obj.userName);
-        alert(obj.department);
-      }
+        if(obj.userID == 0){
+          // alert("用户名或密码不正确");
+          $('#myModal').modal('show');
+          refresh();
+        }else{
+          $.session.set('userID', obj.userID);
+          $.session.set('userName', obj.userName);
+          window.location.href="index.html";
+        }
+      },
     });
   });
-  var flightHandler = function () {};
 </script>
 {% endblock %}

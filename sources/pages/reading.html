@@ -33,6 +33,29 @@
   var pages = 0;
   var current=1;
 
+  function comment(){
+    userID = $.session.get('userID');
+    fileID = $.session.get('fileID');
+    $.ajax({
+      url:"http://localhost:8081/CommentAdd/"+fileID+"/"+userID+"/"+$("#commenttitle").val()+"/"+$("#commentcontent").val(),
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "CommentAddHandler",
+      success:function(obj) {
+        if(obj.content !=null){
+          $("#panel-body-1").removeClass("show");
+          alert("评论成功");
+        } else
+          alert("评论失败");
+      }
+    });
+
+    
+  }
+
   $("#fontchange").change(function(){
     $("#totalStyle").css("font-size",$("#fontchange").val()+"px");
   });
