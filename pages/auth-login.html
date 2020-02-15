@@ -106,7 +106,7 @@
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                   <h4 class="modal-title" id="myModalLabel"></h4>
               </div>
-              <div class="modal-body" style="margin-left: 10%;">用户名或密码不正确</div>
+              <div class="modal-body" style="margin-left: 10%;"  id="alertinfo">用户名或密码不正确</div>
               <div class="modal-footer">
                   <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
               </div>
@@ -143,6 +143,12 @@
   });
 
   $("#logins").click(function(){
+    if($("#email").val()==""||$("#password").val()==""){
+      $('#alertinfo').text("用户名和密码不能为空");
+      $('#myModal').modal('show');
+      refresh();
+      return;
+    }
     if($("#remember-me").is(':checked')){
       $.cookie('username', $("#email").val(), { expires: 7 });
       $.cookie('password', $("#password").val(), { expires: 7 });
@@ -158,6 +164,7 @@
       success:function(obj) {
         if(obj.userID == 0){
           // alert("用户名或密码不正确");
+          $('#alertinfo').text("用户名或密码不正确");
           $('#myModal').modal('show');
           refresh();
         }else{

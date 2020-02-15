@@ -186,7 +186,7 @@
           <span class="selectgroup-button">三国</span>
         </label>
         <label class="selectgroup-item">
-          <input type="radio" name="age" value="JavaScript" class="selectgroup-input">
+          <input type="radio" name="age" value="晋" class="selectgroup-input">
           <span class="selectgroup-button">晋</span>
         </label>
         <label class="selectgroup-item">
@@ -216,31 +216,21 @@
       </div>
     </div>
 
+
+
     <div class="card">
       <div class="card-header">
         <h4 style="color: tomato">搜索结果</h4>
         <div class="card-header-form">
-          <form>
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search">
+                      <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search" id="search">
               <div class="input-group-btn">
-                <button class="btn btn-success"><i class="fas fa-search"></i></button>
+                <button class="btn btn-success" id="simplesearch"><i class="fas fa-search"></i></button>
               </div>
             </div>
-          </form>
         </div>
       </div>
 
-     
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <h4 style="color:tomato">热门书籍</h4>
-        <div class="card-header-action">
-          <a href="catalog-browse.html" class="btn btn-warning" >浏览更多<i class="fas fa-chevron-right"></i></a>
-        </div>
-      </div>
       <div class="card-body p-0">
         <div class="table-responsive table-invoice">
           <table id="mains" class="table table-striped">
@@ -255,12 +245,33 @@
             </tr>
             <tr>
               <td></td>
-              <td><a href="#">INV-87239</a></td>
-              <td class="font-weight-600">李时珍</td>
-              <td>第二版</td>
-              <td>66</td>
+              <td class="font-weight-600"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td>
-                6
+                  <a href="#" class="btn btn-success">查看</a>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td  class="font-weight-600"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <a href="#" class="btn btn-success">查看</a>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="font-weight-600"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
               </td>
               <td>
                   <a href="#" class="btn btn-success">查看</a>
@@ -268,12 +279,11 @@
             </tr>
             <tr>
               <td></td>
-              <td><a href="#">INV-48574</a></td>
-              <td class="font-weight-600">李时珍</td>
+              <td class="font-weight-600"></td>
+              <td ></td>
               <td></td>
-              <td>55</td>
+              <td></td>
               <td>
-                5
               </td>
               <td>
                   <a href="#" class="btn btn-success">查看</a>
@@ -281,55 +291,12 @@
             </tr>
             <tr>
               <td></td>
-              <td><a href="#">INV-76824</a></td>
-              <td class="font-weight-600">李时珍</td>
+              <td class="font-weight-600"></td>
               <td></td>
-              <td>44</td>
-              <td>
-                4
-              </td>
-              <td>
-                  <a href="#" class="btn btn-success">查看</a>
-              </td>
-            </tr>
-            <tr>
               <td></td>
-              <td><a href="#">INV-84990</a></td>
-              <td class="font-weight-600">李时珍</td>
               <td></td>
-              <td>33</td>
-              <td>
-                3
-              </td>
-              <td>
-                  <a href="#" class="btn btn-success">查看</a>
-              </td>
-            </tr>
-            <tr>
               <td></td>
-              <td><a href="#">INV-87320</a></td>
-              <td class="font-weight-600">李时珍</td>
               <td></td>
-              <td>22</td>
-              <td>
-                2
-              </td>
-              <td>
-                
-              </td>
-            </tr>
-            <tr>
-              <td></td>
-              <td><a href="#">INV-87320</a></td>
-              <td class="font-weight-600">李时珍</td>
-              <td></td>
-              <td>22</td>
-              <td>
-                2
-              </td>
-              <td>
-                  <a href="#" class="btn btn-success">查看</a>
-              </td>
             </tr>
           </table>
         </div>
@@ -340,6 +307,7 @@
         <div class="card-body" >
           <nav aria-label="Page navigation example" style="float:right;">
             <ul class="pagination">
+              <li class="page-item" style="line-height: 35px;text-align: center;padding-right: 10px;font-weight: bolder;" id="allnum">共 10 页</li>
               <li class="page-item" id="previous"><a class="page-link">上一页</a></li>         
               <li class="page-item" id="current" style="line-height: 35px;width: 20px;text-align: center;"><a class="page-link">1</a></li>
               <li class="page-item" id="next"><a class="page-link">下一页</a></li>
@@ -373,8 +341,138 @@
 
   <!-- JS Libraies -->
 <script type="text/javascript">
+var current = 0;
+var num=5;
+
+function modify(obj){
+  var index =  0;  
+  $("td").each(function(){
+    if(parseInt(index/7) >= obj.length)
+        $(this).text("");
+    else if(index % 7 == 0)
+      $(this).text(parseInt(index/7)+1+current*num);
+    else if(index % 7 == 1)
+      $(this).text(obj[parseInt(index/7)].fileName);
+    else if(index % 7 == 2)
+      $(this).text(obj[parseInt(index/7)].author);
+    else if(index % 7 == 3)
+      $(this).text(obj[parseInt(index/7)].cateName);
+    else if(index % 7 == 4)
+      $(this).text(obj[parseInt(index/7)].readingQuantity);
+    else if(index % 7 == 5)
+      $(this).text(obj[parseInt(index/7)].citedQuantity);
+    else if(index % 7 == 6){
+      $(this).text("");
+      fileID = obj[parseInt(index/7)].fileID;
+      fileName=obj[parseInt(index/7)].fileName;
+      author=obj[parseInt(index/7)].author;
+      edition=obj[parseInt(index/7)].edition;
+      press=obj[parseInt(index/7)].press;
+      $(this).append("<a href='javascript:void(0);' onclick=\"detail('"+fileID+"','"+fileName+"','"+author+"','"+edition+"','"+press+"')\" class='btn btn-success'>查看</a>");
+    }
+    index++;
+  });
+  $("#current").text((current+1)+"");
+}
 
 $(document).ready(function(){
+  check();
+  $.ajax({
+    url:"http://localhost:8081/Main/"+current*num+"/"+num+"",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "MainHandler",
+    success:function(obj) {
+      modify(obj);
+    }
+  });
+});
+
+$("#previous").click(function(){
+  if(current > 0)
+    current--;
+  else
+    return;
+  var type = $('input:radio[name="types"]:checked').val(); 
+  var age = $('input:radio[name="age"]:checked').val();
+  var search = $("#search").val();
+  if(search == "")
+    search = "NULL";
+  $.ajax({
+    url:"http://localhost:8081/Cate/"+type+"/"+age+"/"+search+"/"+current*num+"/"+num+"",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "CateHandler",
+    success:function(obj) {
+      modify(obj.file);
+    }
+  });
+});
+
+$("#next").click(function(){
+  current++;
+  var type = $('input:radio[name="types"]:checked').val(); 
+  var age = $('input:radio[name="age"]:checked').val();
+  var search = $("#search").val();
+  if(search == "")
+    search = "NULL";
+  $.ajax({
+    url:"http://localhost:8081/Cate/"+type+"/"+age+"/"+search+"/"+current*num+"/"+num+"",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "CateHandler",
+    success:function(obj) {
+      if(obj.file.length == 0){
+        current--;
+      }else
+        modify(obj.file);
+    }
+  });
+});
+
+function requestInfo(){
+  var type = $('input:radio[name="types"]:checked').val(); 
+  var age = $('input:radio[name="age"]:checked').val();
+  var search = $("#search").val();
+  if(search == "")
+    search = "NULL";
+  $.ajax({
+    url:"http://localhost:8081/Cate/"+type+"/"+age+"/"+search+"/"+current*num+"/"+num+"",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "CateHandler",
+    success:function(obj) {
+      modify(obj.file);
+      if(obj.count%5 == 0)
+          $("#allnum").text("共 "+parseInt(obj.count/5)+" 页");
+      else
+          $("#allnum").text("共 "+parseInt(obj.count/5+1)+" 页");
+    }
+  });
+}
+
+$('input:radio[name="types"]').click(function(){
+  requestInfo();
+});
+
+$('input:radio[name="age"]').click(function(){
+  requestInfo();
+});
+
+$("#simplesearch").click(function(){
+  requestInfo();
 });
 </script>
 

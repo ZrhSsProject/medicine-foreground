@@ -21,7 +21,7 @@
 
       <div class="form-group" style="margin-bottom: 5px;">
         <div style="display: inline-block; padding-right: 12px;">
-            <label>书名</label>
+            <label>书&nbsp;名&nbsp;&nbsp;</label>
         </div>
         <div style="display: inline-block; padding-right: 10px;">
             <input type="text" class="form-control" style="height:25px;">
@@ -30,7 +30,7 @@
       
       <div class="form-group" style="margin-bottom: 5px;">
           <div style="display: inline-block; padding-right: 12px;">
-              <label>作者</label>
+              <label>作&nbsp;者&nbsp;&nbsp;</label>
           </div>
           <div style="display: inline-block;">
               <input type="text" class="form-control" style="height:25px;">
@@ -39,16 +39,18 @@
 
       <div class="form-group" style="margin-bottom: 5px;">
           <div style="display: inline-block; padding-right: 12px;">
-              <label>译者</label>
+              <label>译&nbsp;者&nbsp;&nbsp;</label>
           </div>
           <div style="display: inline-block;">
               <input type="text" class="form-control" style="height:25px;">
           </div>
       </div>
 
+     
+
       <div class="form-group" style="margin-bottom: 5px;">
-          <div style="display: inline-block;">
-              <label>关键字</label>
+          <div style="display: inline-block;padding-right: 12px;">
+              <label>书&nbsp;号&nbsp;&nbsp;</label>
           </div>
           <div style="display: inline-block;">
               <input type="text" class="form-control" style="height:25px;">
@@ -57,16 +59,7 @@
 
       <div class="form-group" style="margin-bottom: 5px;">
           <div style="display: inline-block;padding-right: 12px;">
-              <label>书 号</label>
-          </div>
-          <div style="display: inline-block;">
-              <input type="text" class="form-control" style="height:25px;">
-          </div>
-      </div>
-
-      <div class="form-group" style="margin-bottom: 5px;">
-          <div style="display: inline-block;padding-right: 12px;">
-              <label>类别</label>
+              <label>类&nbsp;别&nbsp;&nbsp;</label>
           </div>
           <div style="display: inline-block;">
               <input type="text" class="form-control" style="height:25px;">
@@ -75,7 +68,7 @@
 
       <div class="form-group" style="margin-bottom: 5px;">
           <div style="display: inline-block;">
-              <label>出版社</label>
+              <label>出版社&nbsp;&nbsp;</label>
           </div>
           <div style="display: inline-block;">
               <input type="text" class="form-control" style="height:25px;">
@@ -84,25 +77,256 @@
 
       <div class="form-group" style="margin-bottom: 5px;">
           <div style="display: inline-block;">
-              <label>发表日期</label>
-              <label>从</label>
+              <label >朝代&nbsp;从&nbsp;</label>
           </div>
           <div style="display: inline-block;">
-              <input type="text" class="form-control datepicker"style="height:25px;">
+            <select id="select1" class="form-control" style="padding:1px 1px;">
+                <option>秦</option>
+                <option>汉</option>
+                <option>三国</option>
+                <option>晋</option>
+                <option>隋</option>
+                <option>唐</option>
+                <option>宋</option>
+                <option>元</option>
+                <option>明</option>
+                <option>清</option>
+            </select>
           </div>
           <div style="display: inline-block;"><label>到</label></div>
-          <div style="display: inline-block;"><input type="text" class="form-control datepicker"style="height:25px;"></div>   
+          <div style="display: inline-block;">
+            <select id="select2" class="form-control" style="padding:1px 1px;">
+                <option>秦</option>
+                <option>汉</option>
+                <option>三国</option>
+                <option>晋</option>
+                <option>隋</option>
+                <option>唐</option>
+                <option>宋</option>
+                <option>元</option>
+                <option>明</option>
+                <option>清</option>
+            </select>
+          </div>   
               
       </div>
 
       <div class="buttons" style="float:right;margin-right: 30%;">
-          <a href="#" class="btn btn-warning">检索</a>
+        <input type="button" class="btn btn-warning" onclick="moresearch()" value="检索" />
       </div>
+
+      <div class="card" style="clear:both;display:none;" id="result">
+        <div class="card-header">
+          <h4 id="navTitle" style="color:tomato">搜索结果</h4>
+          
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive table-invoice">
+            <table id="mains" class="table table-striped">
+              <tr>
+                <th>序号</th>
+                <th>书名</th>
+                <th>作者</th>
+                <th>类别</th>
+                <th>阅读量</th>
+                <th>被引量</th>
+                <th>浏览</th>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="font-weight-600"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <a href="#" class="btn btn-success">查看</a>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td  class="font-weight-600"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <a href="#" class="btn btn-success">查看</a>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="font-weight-600"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-success">查看</a>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="font-weight-600"></td>
+                <td ></td>
+                <td></td>
+                <td></td>
+                <td>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-success">查看</a>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="font-weight-600"></td>
+                <td ></td>
+                <td></td>
+                <td></td>
+                <td>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-success">查看</a>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div >
+        
+      </div>
+      <div class="card" id="moreresult" style="display:none;">
+        <div class="card-body" >
+          <nav aria-label="Page navigation example" style="float:right;">
+            <ul class="pagination">
+              <li class="page-item" style="line-height: 35px;text-align: center;padding-right: 10px;font-weight: bolder;" id="allnum">共 10 页</li>
+              <li class="page-item" id="previous"><a class="page-link">上一页</a></li>         
+              <li class="page-item" id="current" style="line-height: 35px;width: 20px;text-align: center;"><a class="page-link">1</a></li>
+              <li class="page-item" id="next"><a class="page-link">下一页</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+  
         
 {% endblock %}
 
-
 {% block plugins_js %}
+  <script>
+      var list = ['秦','汉','三国','晋','隋','唐','宋','元','明','清'];
+      var current = 0;
+      var num=5;
+      var val ="";
+
+      function modify(obj){
+        var index =  0;  
+        $("td").each(function(){
+            if(parseInt(index/7) >= obj.length)
+                $(this).text("");
+            else if(index % 7 == 0)
+            $(this).text(parseInt(index/7)+1+current*num);
+            else if(index % 7 == 1)
+            $(this).text(obj[parseInt(index/7)].fileName);
+            else if(index % 7 == 2)
+            $(this).text(obj[parseInt(index/7)].author);
+            else if(index % 7 == 3)
+            $(this).text(obj[parseInt(index/7)].cateName);
+            else if(index % 7 == 4)
+            $(this).text(obj[parseInt(index/7)].readingQuantity);
+            else if(index % 7 == 5)
+            $(this).text(obj[parseInt(index/7)].citedQuantity);
+            else if(index % 7 == 6){
+            $(this).text("");
+            fileID = obj[parseInt(index/7)].fileID;
+            fileName=obj[parseInt(index/7)].fileName;
+            author=obj[parseInt(index/7)].author;
+            edition=obj[parseInt(index/7)].edition;
+            press=obj[parseInt(index/7)].press;
+            $(this).append("<a href='javascript:void(0);' onclick=\"detail('"+fileID+"','"+fileName+"','"+author+"','"+edition+"','"+press+"')\" class='btn btn-success'>查看</a>");
+            }
+            index++;
+        });
+        $("#current").text((current+1)+"");
+      }
+
+
+      $("#select1").change(function(){
+        $("#select2").empty();
+        var index1 =  list.indexOf($("#select1").val());
+        for(var i=index1;i<list.length;i++){
+            $("#select2").append("<option>"+list[i]+"&nbsp;&nbsp;&nbsp;&nbsp;</option>");
+        }
+      });
+      function moresearch(){
+        for(var i=0;i<$(":input[type='text']").length;i++){
+            if($(":input[type='text']").eq(i).val() == "")
+                val+="NULL"+"/";
+            else
+                val+=$(":input").eq(i).val()+"/";
+        }
+        val+=list.indexOf($("#select1").val())+"/"+list.indexOf($("#select2").val())+"/";
+        $.ajax({
+            url:"http://localhost:8081/advancedSearch/"+val+current*num+"/"+num,
+            data:{},
+            crossDomain:true,
+            type:"get",
+            dataType:"jsonp",
+            jsonp: "callback",
+            jsonpCallback: "advancedsearchHandler",
+            success:function(obj) {
+            $("#result").css("display","block");
+            $("#moreresult").css("display","block");
+            if(obj.count%5 == 0)
+                $("#allnum").text("共 "+parseInt(obj.count/5)+" 页");
+            else
+                $("#allnum").text("共 "+parseInt(obj.count/5+1)+" 页");
+            modify(obj.file);
+            }
+        });        
+      }
+
+      $("#previous").click(function(){
+        if(current > 0)
+            current--;
+        else
+            return;
+        
+        $.ajax({
+            url:"http://localhost:8081/advancedSearch/"+val+current*num+"/"+num,
+            data:{},
+            crossDomain:true,
+            type:"get",
+            dataType:"jsonp",
+            jsonp: "callback",
+            jsonpCallback: "advancedsearchHandler",
+            success:function(obj) {
+                modify(obj.file);
+            }
+        });
+      });
+
+      $("#next").click(function(){
+        current++;
+        $.ajax({
+            url:"http://localhost:8081/advancedSearch/"+val+current*num+"/"+num,
+            data:{},
+            crossDomain:true,
+            type:"get",
+            dataType:"jsonp",
+            jsonp: "callback",
+            jsonpCallback: "advancedsearchHandler",
+            success:function(obj) {
+                if(obj.file.length == 0){
+                    current--;
+                }else
+                    modify(obj.file);
+                }
+        });
+      });
+  </script>
+
   <script src="../node_modules/cleave.js/dist/cleave.min.js"></script>
   <script src="../node_modules/cleave.js/dist/addons/cleave-phone.us.js"></script>
   <script src="../node_modules/jquery-pwstrength/jquery.pwstrength.min.js"></script>
