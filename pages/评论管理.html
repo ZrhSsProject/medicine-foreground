@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">  
-  <title>Blank Page</title>
+  <title>userinfo</title>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -120,7 +120,15 @@
           <div class="col-md-12 col-12 col-sm-12" >
             <div class="card" style="margin-bottom: 0em;">
               <div class="card-header">
-                <h4>我的评论</h4>
+                <h4>评论管理</h4>
+                <div class="card-header-form">
+                  <div class="input-group">
+                     <input type="text" class="form-control" placeholder="Search" id="search">
+                     <div class="input-group-btn">
+                       <button class="btn btn-success" id="simplesearch" onclick="deleteSearch()"><i class="fas fa-search"></i></button>
+                     </div>
+                   </div>
+                </div>
               </div>
               <div class="card-body p-0">
                 <div class="table-responsive">
@@ -215,6 +223,72 @@
 <script>
   var current = 0;
   var num=5;
+
+  function SearchRes(content){
+    $.ajax({
+    url:"http://localhost:8081/searchDelete/"+content,
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "searchDeleteHandler",
+    success:function(obj) {
+      if(obj == 1){
+        $.alert({
+            title:'提示!',
+            content:'删除成功',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'确定',
+                btnClass:'btn-blue'
+              }
+            }
+        });
+        requestComment();
+      }else{
+        $.alert({
+            title:'提示!',
+            content:'无匹配内容',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'确定',
+                btnClass:'btn-blue'
+              }
+            }
+        });
+      }
+    }
+    });
+  }
+
+  function deleteSearch(){
+    $.confirm({
+        icon:'fa fa-question',
+        theme:'supervan',
+        closeIcon:true,
+        animation:'scale',
+        type:'orange',
+        title: "是否删除含 "+$("#search").val()+" 评论",
+        content: "此操作无法撤回，是否继续？",
+        buttons: {
+          confirm: {
+              text: "确认",
+              btnClass: 'btn-blue',
+              action:function(){
+                SearchRes($("#search").val());
+              }
+          },
+          cancel: {
+              text: "取消"            
+              }
+        }
+      });
+  }
 
   function info(titles,contents){
     $.alert({
@@ -325,13 +399,13 @@
   function requestComment(){
     check();
     $.ajax({
-      url:"http://localhost:8081/CommentInfo/"+$.session.get("userID")+"/"+current*num+"/"+num+"",
+      url:"http://localhost:8081/CommentAll/"+"/"+current*num+"/"+num+"",
       data:{},
       crossDomain:true,
       type:"get",
       dataType:"jsonp",
       jsonp: "callback",
-      jsonpCallback: "CommentInfoHandler",
+      jsonpCallback: "CommentAllHandler",
       success:function(obj) {
         modify(obj.file);
         if(obj.count%5 == 0)
@@ -350,13 +424,13 @@
   else
     return;
     $.ajax({
-      url:"http://localhost:8081/CommentInfo/"+$.session.get("userID")+"/"+current*num+"/"+num+"",
+      url:"http://localhost:8081/CommentAll/"+"/"+current*num+"/"+num+"",
       data:{},
       crossDomain:true,
       type:"get",
       dataType:"jsonp",
       jsonp: "callback",
-      jsonpCallback: "CommentInfoHandler",
+      jsonpCallback: "CommentAllHandler",
       success:function(obj) {
         modify(obj.file);
        
@@ -369,13 +443,13 @@
 $("#next").click(function(){
   current++;
   $.ajax({
-      url:"http://localhost:8081/CommentInfo/"+$.session.get("userID")+"/"+current*num+"/"+num+"",
+      url:"http://localhost:8081/CommentAll/"+"/"+current*num+"/"+num+"",
       data:{},
       crossDomain:true,
       type:"get",
       dataType:"jsonp",
       jsonp: "callback",
-      jsonpCallback: "CommentInfoHandler",
+      jsonpCallback: "CommentAllHandler",
       success:function(obj) {
         if(obj.file.length == 0){
           current--;

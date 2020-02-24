@@ -1,0 +1,343 @@
+{% set title = 'userinfo' %}
+{% set page = 'userinfo.html' %}
+{% extends 'layouts/master.html' %}
+
+{% block content %}
+        <section class="section">
+          <div class="col-md-12 col-12 col-sm-12" >
+            <div class="card" style="margin-bottom: 0em;">
+              <div class="card-header">
+                <h4>评论管理</h4>
+                <div class="card-header-form">
+                  <div class="input-group">
+                     <input type="text" class="form-control" placeholder="Search" id="search">
+                     <div class="input-group-btn">
+                       <button class="btn btn-success" id="simplesearch" onclick="deleteSearch()"><i class="fas fa-search"></i></button>
+                     </div>
+                   </div>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-striped mb-0">
+                    <thead>
+                      <tr>
+                        <th>评论</th>
+                        <th>书名</th>
+                        <th>时间</th>
+                        <th>操作</th>   
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+            <div class="card" style="margin-top: 0em;" >
+              <div class="card-body" >
+                <nav aria-label="Page navigation example" style="float:right;">
+                  <ul class="pagination">
+                    <li class="page-item" style="line-height: 35px;text-align: center;padding-right: 10px;font-weight: bolder;" id="allnum">共 10 页</li>
+                    <li class="page-item" id="previous"><a class="page-link">上一页</a></li>         
+                    <li class="page-item" id="current" style="line-height: 35px;width: 20px;text-align: center;">1</li>
+                    <li class="page-item" id="next"><a class="page-link">下一页</a></li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+
+          
+        </section>
+        {% endblock %}
+
+  {% block plugins_js %}
+<script>
+  var current = 0;
+  var num=5;
+
+  function SearchRes(content){
+    $.ajax({
+    url:"http://localhost:8081/searchDelete/"+content,
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "searchDeleteHandler",
+    success:function(obj) {
+      if(obj == 1){
+        $.alert({
+            title:'提示!',
+            content:'删除成功',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'确定',
+                btnClass:'btn-blue'
+              }
+            }
+        });
+        requestComment();
+      }else{
+        $.alert({
+            title:'提示!',
+            content:'无匹配内容',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'确定',
+                btnClass:'btn-blue'
+              }
+            }
+        });
+      }
+    }
+    });
+  }
+
+  function deleteSearch(){
+    $.confirm({
+        icon:'fa fa-question',
+        theme:'supervan',
+        closeIcon:true,
+        animation:'scale',
+        type:'orange',
+        title: "是否删除含 "+$("#search").val()+" 评论",
+        content: "此操作无法撤回，是否继续？",
+        buttons: {
+          confirm: {
+              text: "确认",
+              btnClass: 'btn-blue',
+              action:function(){
+                SearchRes($("#search").val());
+              }
+          },
+          cancel: {
+              text: "取消"            
+              }
+        }
+      });
+  }
+
+  function info(titles,contents){
+    $.alert({
+      theme: 'supervan',
+      title: titles,
+      content: contents,
+      confirmButton: '好的',
+      confirmButtonClass: 'btn-primary',
+      icon: 'fa fa-info',
+      animation: 'zoom',
+      buttons: {
+        confirm: {
+            text: "确认",
+            btnClass: 'btn-blue'
+        },
+      }
+  });
+  }
+
+  function deleteComment(commentID){
+    $.ajax({
+    url:"http://localhost:8081/CommentDelete/"+commentID,
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "CommentDeleteHandler",
+    success:function(obj) {
+      if(obj == 1){
+        $.alert({
+            title:'提示!',
+            content:'删除成功',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'确定',
+                btnClass:'btn-blue'
+              }
+            }
+        });
+        requestComment();
+      }else{
+        $.alert({
+            title:'提示!',
+            content:'删除失败，请稍后再试',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'确定',
+                btnClass:'btn-blue'
+              }
+            }
+        });
+      }
+    }
+    });
+  }
+
+  function modify(obj){
+    var index =  0;  
+    $("td").each(function(){
+    if(parseInt(index/4) >= obj.length)
+        $(this).text("");
+    else if(index % 4 == 0)
+      $(this).text(obj[parseInt(index/4)].title);
+    else if(index % 4 == 1)
+      $(this).text(obj[parseInt(index/4)].fileName);
+    else if(index % 4 == 2)
+      $(this).text(obj[parseInt(index/4)].commentTime);
+    else if(index % 4 == 3){
+      $(this).text("");
+      $(this).append('<a class="btn btn-primary btn-action" data-toggle="tooltip" title="查看更多"><i class="fas fa-comment"></i></a>');
+      $(this).append(' <a class="btn btn-danger btn-action" data-toggle="tooltip" title="删除"><i class="fas fa-trash"></i></a>');
+      $(this).find("a").eq(1).attr("titles",obj[parseInt(index/4)].commentID);
+      $(this).find("a").eq(0).attr("onclick","info('"+obj[parseInt(index/4)].title+"','"+obj[parseInt(index/4)].content+"')");
+      $(this).find("a").eq(1).confirm({
+        icon:'fa fa-question',
+        theme:'supervan',
+        closeIcon:true,
+        animation:'scale',
+        type:'orange',
+        title: "是否删除",
+        content: "此操作无法撤回，是否继续？",
+        buttons: {
+          confirm: {
+              text: "确认",
+              btnClass: 'btn-blue',
+              action:function(){
+                deleteComment(this.$target.attr("titles"));
+              }
+          },
+          cancel: {
+              text: "取消"            
+              }
+        }
+      });
+    }
+    index++;
+  });
+  $("#current").text((current+1)+"");
+
+  }
+
+
+  function requestComment(){
+    check();
+    $.ajax({
+      url:"http://localhost:8081/CommentAll/"+"/"+current*num+"/"+num+"",
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "CommentAllHandler",
+      success:function(obj) {
+        modify(obj.file);
+        if(obj.count%5 == 0)
+        $("#allnum").text("共 "+parseInt(obj.count/5)+" 页");
+     else
+        $("#allnum").text("共 "+parseInt(obj.count/5+1)+" 页");
+    }
+        
+     
+    });
+  }
+
+  $("#previous").click(function(){
+  if(current > 0)
+    current--;
+  else
+    return;
+    $.ajax({
+      url:"http://localhost:8081/CommentAll/"+"/"+current*num+"/"+num+"",
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "CommentAllHandler",
+      success:function(obj) {
+        modify(obj.file);
+       
+    }
+        
+     
+    });
+});
+
+$("#next").click(function(){
+  current++;
+  $.ajax({
+      url:"http://localhost:8081/CommentAll/"+"/"+current*num+"/"+num+"",
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "CommentAllHandler",
+      success:function(obj) {
+        if(obj.file.length == 0){
+          current--;
+        }else{
+           modify(obj.file);
+        }
+        
+    }
+        
+     
+    });
+});
+
+
+  
+
+  $(document).ready(function(){
+    requestComment();
+    
+  });
+
+</script>
+{% endblock %}

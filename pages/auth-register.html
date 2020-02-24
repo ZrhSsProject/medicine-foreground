@@ -85,6 +85,7 @@
             </div>
         </div>
       </div>
+      
     </section>
   </div>
 
@@ -110,11 +111,8 @@
   }
 
   $("#register").click(function(){
-    alert("test");
-    alert($("#frist_name").val());
-    alert($("#password").val());
     $.ajax({
-      url:"http://localhost:8081/register/"+$("#frist_name").val()+"/"+$("#password").val()+"",
+      url:"http://localhost:8081/register/"+$("#frist_name").val()+"/"+$("#email").val()+"/"+$("#password").val()+"",
       data:{},
       crossDomain:true,
       type:"get",
@@ -122,9 +120,21 @@
       jsonp: "callback",
       jsonpCallback: "RegisterHandler",
       success:function(obj) {
-        alert("success");
-        alert(obj.userName);
-        alert(obj.password);
+
+        $.alert({
+            title:'提示!',
+            content:'注册成功,即将跳转登录',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'确定',
+                btnClass:'btn-blue'
+              }
+            }
+        });
+
+        window.location.href="auth-login.html";
       }
     });
   });

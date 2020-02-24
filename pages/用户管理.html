@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">  
-  <title>Blank Page</title>
+  <title>userinfo</title>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -120,16 +120,18 @@
           <div class="col-md-12 col-12 col-sm-12" >
             <div class="card" style="margin-bottom: 0em;">
               <div class="card-header">
-                <h4>我的评论</h4>
+                <h4>用户管理</h4>
+                <button style="margin-left: 20px;" class="btn btn-primary" onclick="adduser()">新建用户</button>
+                <button style="margin-left: 20px;" class="btn btn-primary">批量导入用户</button>
               </div>
               <div class="card-body p-0">
                 <div class="table-responsive">
                   <table class="table table-striped mb-0">
                     <thead>
                       <tr>
-                        <th>评论</th>
-                        <th>书名</th>
-                        <th>时间</th>
+                        <th>用户名</th>
+                        <th>邮箱</th>
+                        <th>权限</th>
                         <th>操作</th>   
                       </tr>
                     </thead>
@@ -188,7 +190,41 @@
             </div>
           </div>
 
-          
+          <div class="accordion" id="accordion1">
+            <div class="accordion-body collapse " id="panel-body-1" data-parent="#accordion1" style="z-index: 1000;position: fixed;top:10%;left:35%;width:30%;">
+              <div class="row">
+                <div style="width:100%">
+                    <div class="card" style="background-color: rgb(182, 158, 121);">
+                          <div class="card-body pb-0">
+                            <div class="form-group">
+                              <label>用户名</label>
+                              <input type="text" name="name" class="form-control" id="usernames">
+                            </div>
+                            <div class="form-group">
+                              <label>邮箱</label>
+                              <input type="text" name="name" class="form-control" id="emails">
+                            </div>
+                            <div class="form-group">
+                              <label>密码</label>
+                              <input type="text" name="name" class="form-control" id="passwords">
+                            </div>
+                            <div class="form-group">
+                              <label>权限</label>
+                              <select id="selects" class="form-control">
+                                <option value="1">系统管理员</option>
+                                <option value="2">普通用户</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="card-footer pt-0">
+                            <button class="btn btn-warning" style="float:left" onclick="canceladd()" >取消</button>
+                            <button class="btn btn-warning" style="float:right" onclick="addinfo()" >修改</button>
+                          </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
       </div>
       <footer class="main-footer">
@@ -212,37 +248,71 @@
   <script src="https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
   
   <!-- JS Libraies -->
+  
 <script>
   var current = 0;
   var num=5;
 
-  function info(titles,contents){
-    $.alert({
-      theme: 'supervan',
-      title: titles,
-      content: contents,
-      confirmButton: '好的',
-      confirmButtonClass: 'btn-primary',
-      icon: 'fa fa-info',
-      animation: 'zoom',
-      buttons: {
-        confirm: {
-            text: "确认",
-            btnClass: 'btn-blue'
-        },
-      }
-  });
+  function adduser(){
+    $("#panel-body-1").addClass("show");
   }
 
-  function deleteComment(commentID){
+  function canceladd(){
+    $("#panel-body-1").removeClass("show");
+  }
+
+  function addinfo(){
+    $("#panel-body-1").removeClass("show");
     $.ajax({
-    url:"http://localhost:8081/CommentDelete/"+commentID,
+    url:"http://localhost:8081/addUser/"+$("#usernames").val()+"/"+$("#emails").val()+"/"+$("#passwords").val()+"/"+$("#selects").val(),
     data:{},
     crossDomain:true,
     type:"get",
     dataType:"jsonp",
     jsonp: "callback",
-    jsonpCallback: "CommentDeleteHandler",
+    jsonpCallback: "addUserHandler",
+    success:function(obj) {
+      if(obj == 1){
+        $.alert({
+            title:'提示!',
+            content:'添加成功',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'确定',
+                btnClass:'btn-blue'
+              }
+            }
+        });
+        requestuser();
+      }else{
+        $.alert({
+            title:'提示!',
+            content:'添加失败，请稍后再试',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'确定',
+                btnClass:'btn-blue'
+              }
+            }
+        });
+      }
+    }
+    });
+  }
+
+  function deleteuser(userID){
+    $.ajax({
+    url:"http://localhost:8081/userDelete/"+userID,
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "userDeleteHandler",
     success:function(obj) {
       if(obj == 1){
         $.alert({
@@ -257,7 +327,7 @@
               }
             }
         });
-        requestComment();
+        requestuser();
       }else{
         $.alert({
             title:'提示!',
@@ -276,24 +346,69 @@
     });
   }
 
+  function  changeuser(userID,obj){
+    console.log(obj.value);
+    $.ajax({
+      url:"http://localhost:8081/userModify/"+userID+"/"+obj.value,
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "userModifyHandler",
+      success:function(obj) {
+        if(obj == 1){
+          $.alert({
+              title:'提示!',
+              content:'修改成功',
+              animation:'scale',
+              closeAnimation:'scale',
+              buttons:{
+                okay:{
+                  text:'确定',
+                  btnClass:'btn-blue'
+                }
+              }
+          });
+        }else{
+          $.alert({
+              title:'提示!',
+              content:'修改失败，请稍后再试',
+              animation:'scale',
+              closeAnimation:'scale',
+              buttons:{
+                okay:{
+                  text:'确定',
+                  btnClass:'btn-blue'
+                }
+              }
+          });
+        }
+      }
+      });
+  }
+
   function modify(obj){
     var index =  0;  
     $("td").each(function(){
     if(parseInt(index/4) >= obj.length)
         $(this).text("");
     else if(index % 4 == 0)
-      $(this).text(obj[parseInt(index/4)].title);
+      $(this).text(obj[parseInt(index/4)].userName);
     else if(index % 4 == 1)
-      $(this).text(obj[parseInt(index/4)].fileName);
-    else if(index % 4 == 2)
-      $(this).text(obj[parseInt(index/4)].commentTime);
+      $(this).text(obj[parseInt(index/4)].email);
+    else if(index % 4 == 2){
+      $(this).empty();           
+      if(obj[parseInt(index/4)].roleID == 1)
+        $(this).append('<select onchange="changeuser('+obj[parseInt(index/4)].userID+',this)" class="form-control" style="width:140px;"><option value="1" selected>系统管理员</option><option value="2">普通用户</option></select>');
+      else
+        $(this).append('<select onchange="changeuser('+obj[parseInt(index/4)].userID+',this)" class="form-control" style="width:140px;"><option value="1">系统管理员</option><option value="2" selected>普通用户</option></select>');
+    }
     else if(index % 4 == 3){
       $(this).text("");
-      $(this).append('<a class="btn btn-primary btn-action" data-toggle="tooltip" title="查看更多"><i class="fas fa-comment"></i></a>');
       $(this).append(' <a class="btn btn-danger btn-action" data-toggle="tooltip" title="删除"><i class="fas fa-trash"></i></a>');
-      $(this).find("a").eq(1).attr("titles",obj[parseInt(index/4)].commentID);
-      $(this).find("a").eq(0).attr("onclick","info('"+obj[parseInt(index/4)].title+"','"+obj[parseInt(index/4)].content+"')");
-      $(this).find("a").eq(1).confirm({
+      $(this).find("a").eq(0).attr("idinfo",obj[parseInt(index/4)].userID);
+      $(this).find("a").eq(0).confirm({
         icon:'fa fa-question',
         theme:'supervan',
         closeIcon:true,
@@ -306,7 +421,7 @@
               text: "确认",
               btnClass: 'btn-blue',
               action:function(){
-                deleteComment(this.$target.attr("titles"));
+                deleteuser(this.$target.attr("idinfo"));
               }
           },
           cancel: {
@@ -322,18 +437,18 @@
   }
 
 
-  function requestComment(){
+  function requestuser(){
     check();
     $.ajax({
-      url:"http://localhost:8081/CommentInfo/"+$.session.get("userID")+"/"+current*num+"/"+num+"",
+      url:"http://localhost:8081/userManage/"+current*num+"/"+num,
       data:{},
       crossDomain:true,
       type:"get",
       dataType:"jsonp",
       jsonp: "callback",
-      jsonpCallback: "CommentInfoHandler",
+      jsonpCallback: "userManageHandler",
       success:function(obj) {
-        modify(obj.file);
+        modify(obj.users);
         if(obj.count%5 == 0)
         $("#allnum").text("共 "+parseInt(obj.count/5)+" 页");
      else
@@ -350,15 +465,15 @@
   else
     return;
     $.ajax({
-      url:"http://localhost:8081/CommentInfo/"+$.session.get("userID")+"/"+current*num+"/"+num+"",
+      url:"http://localhost:8081/userManage/"+current*num+"/"+num,
       data:{},
       crossDomain:true,
       type:"get",
       dataType:"jsonp",
       jsonp: "callback",
-      jsonpCallback: "CommentInfoHandler",
+      jsonpCallback: "userManageHandler",
       success:function(obj) {
-        modify(obj.file);
+        modify(obj.users);
        
     }
         
@@ -369,34 +484,26 @@
 $("#next").click(function(){
   current++;
   $.ajax({
-      url:"http://localhost:8081/CommentInfo/"+$.session.get("userID")+"/"+current*num+"/"+num+"",
+      url:"http://localhost:8081/userManage/"+current*num+"/"+num,
       data:{},
       crossDomain:true,
       type:"get",
       dataType:"jsonp",
       jsonp: "callback",
-      jsonpCallback: "CommentInfoHandler",
+      jsonpCallback: "userManageHandler",
       success:function(obj) {
         if(obj.file.length == 0){
           current--;
         }else{
-           modify(obj.file);
-        }
-        
-    }
-        
-     
+           modify(obj.users);
+        }  
+      }   
     });
 });
 
-
-  
-
-  $(document).ready(function(){
-    requestComment();
-    
-  });
-
+$(document).ready(function(){
+  requestuser();
+});
 </script>
 
   <!-- Template JS File -->
