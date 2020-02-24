@@ -115,7 +115,7 @@
         <input type="button" class="btn btn-warning" onclick="moresearch()" value="检索" />
       </div>
 
-      <div class="card" style="clear:both;display:none;" id="result">
+      <div class="card" style="clear:both;display:none;background-color: rgba(247, 196, 162, 0.425);margin-bottom: 0em;" id="result">
         <div class="card-header">
           <h4 id="navTitle" style="color:tomato">搜索结果</h4>
           
@@ -196,12 +196,12 @@
       </div>
       <div >
         
-      </div>
-      <div class="card" id="moreresult" style="display:none;">
-        <div class="card-body" >
-          <nav aria-label="Page navigation example" style="float:right;">
+   
+      <div class="card" id="moreresult" style="display:none;height: 60px;margin-top: 0em;">
+        <div class="card-body" style="float:right;">
+          <nav aria-label="Page navigation example" >
             <ul class="pagination">
-              <li class="page-item" style="line-height: 35px;text-align: center;padding-right: 10px;font-weight: bolder;" id="allnum">共 10 页</li>
+              <li class="page-item" style="line-height: 35px;text-align: center;padding-right: 10px;font-weight: bolder;" id="allnum">共&nbsp&nbsp页</li>
               <li class="page-item" id="previous"><a class="page-link">上一页</a></li>         
               <li class="page-item" id="current" style="line-height: 35px;width: 20px;text-align: center;"><a class="page-link">1</a></li>
               <li class="page-item" id="next"><a class="page-link">下一页</a></li>
@@ -209,6 +209,7 @@
           </nav>
         </div>
       </div>
+      
   
         
 {% endblock %}
@@ -260,6 +261,8 @@
         }
       });
       function moresearch(){
+        val ="";
+        current = 0;
         for(var i=0;i<$(":input[type='text']").length;i++){
             if($(":input[type='text']").eq(i).val() == "")
                 val+="NULL"+"/";
@@ -276,6 +279,7 @@
             jsonp: "callback",
             jsonpCallback: "advancedsearchHandler",
             success:function(obj) {
+            
             $("#result").css("display","block");
             $("#moreresult").css("display","block");
             if(obj.count%5 == 0)
@@ -320,9 +324,10 @@
             success:function(obj) {
                 if(obj.file.length == 0){
                     current--;
-                }else
+                }else{
                     modify(obj.file);
                 }
+            }
         });
       });
   </script>

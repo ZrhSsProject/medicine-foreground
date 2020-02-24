@@ -1,0 +1,44 @@
+{% set title = 'userinfo' %}
+{% set page = 'userinfo.html' %}
+{% extends 'layouts/master.html' %}
+
+{% block content %}
+  <section class="section">
+    <div class="section-body">
+      <h2 class="section-title">我的账户</h2>
+      <div class="card">
+      <form class="wizard-content mt-2  ">
+        <div class="wizard-pane">
+          <div class="form-group row align-items-center">
+            <label class="col-md-4 text-md-right text-left">姓名</label>
+            <label class="col-md-3">admin</label>
+          </div>
+          <div class="form-group row align-items-center">
+            <label class="col-md-4 text-md-right text-left">邮箱</label>
+            <label class="col-md-3">2269429539@qq.com</label> 
+        
+            <a href="auth-reset-password.html">更换邮箱</a>
+          
+          </div>
+          <div class="form-group row align-items-center">
+            <label class="col-md-4 text-md-right text-left">密码</label>
+            <label class="col-md-3">123456</label> 
+        
+            <a href="auth-reset-password.html">修改密码</a>
+          
+          </div>
+          
+          </div>
+         
+          <div class="form-group row">
+            <div class="col-md-4"></div>
+            <div class="col-lg-4 col-md-6 text-right">
+              <a href="#" class="btn btn-icon icon-right btn-primary">修改密码<i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    </div>
+  </section>
+{% endblock %}

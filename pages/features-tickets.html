@@ -8,7 +8,7 @@
   <!-- General CSS Files -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
+  <link href="https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.css" rel="stylesheet">
   <!-- CSS Libraries -->
   <link rel="stylesheet" href="../node_modules/summernote/dist/summernote-bs4.css">
   <link rel="stylesheet" href="../node_modules/chocolat/dist/css/chocolat.css">
@@ -76,16 +76,14 @@
               <li class="nav-item dropdown">
                 <a href="specialknowledgebase.html" class="nav-link"><i class="fas fa-th-large"></i> <span>专题资料库</span></a>
               </li>
+             
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i> <span>个人中心</span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">我的账户</a></li>
-                    <li><a href="#">我的收藏</a></li>
-                    <li><a href="#">我的评论</a></li>
-                    <li><a href="#">我的笔记</a></li>
-
-                    <li><a href="auth-login.html">登录</a></li>
-                    <li><a href="auth-register.html">注册</a></li>
+                    <li><a href="userinfo.html">我的账户</a></li>
+                    <li><a href="bookcollection.html">我的书架</a></li>
+                    <li><a href="mycomment.html">我的评论</a></li>
+                    <li><a href="notelist.html">我的笔记</a></li>
                     <li><a href="auth-forgot-password.html">忘记密码</a></li>
                     <li><a href="auth-reset-password.html">重置密码</a></li>
                   </ul>
@@ -96,6 +94,7 @@
                 <ul class="dropdown-menu">
                     <li><a href="#">用户管理</a></li>
                     <li><a href="#">评论管理</a></li>
+                    <li><a href="#">笔记管理</a></li>
                     <li><a href="#">知识可视化</a></li>
                     <li><a href="#">用户行为分析</a></li>
                     <li><a href="#">访问统计</a></li>
@@ -259,7 +258,8 @@
   <script src="../assets/js/stisla.js"></script>
   <script src="../assets/js/jquerysession.js"></script>
   <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-
+  <script src="https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
+  
   <!-- JS Libraies -->
   <script src="../node_modules/summernote/dist/summernote-bs4.js"></script>
   <script src="../node_modules/chocolat/dist/js/jquery.chocolat.min.js"></script>

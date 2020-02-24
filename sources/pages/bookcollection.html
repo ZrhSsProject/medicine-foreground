@@ -1,0 +1,188 @@
+{% set title = 'Blank Page' %}
+{% set page = 'blank.html' %}
+{% extends 'layouts/master.html' %}
+
+{% block content %}
+        <section class="section">
+          <div class="card" style="margin-bottom:0">
+            <div class="card-header">
+              <h4>我的书架</h4>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <div class="row gutters-sm" id="bookframes">
+                
+
+              
+              
+                </div>
+                
+              </div>
+              
+            </div>
+
+            
+
+          </div>
+          <div class="card" id="moreresult" style="height: 60px;margin-top: 0em;">
+            <div class="card-body" style="float:right;text-align: right;margin-left: 70%;">
+              <nav aria-label="Page navigation example" >
+                <ul class="pagination">
+                  <li class="page-item" style="line-height: 35px;text-align: center;padding-right: 10px;font-weight: bolder;" id="allnum">共&nbsp&nbsp页</li>
+                  <li class="page-item" id="previous"><a class="page-link">上一页</a></li>         
+                  <li class="page-item" id="current" style="line-height: 35px;width: 20px;text-align: center;">1</li>
+                  <li class="page-item" id="next"><a class="page-link">下一页</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+     
+
+
+        </section>
+{% endblock %}
+
+
+{% block plugins_js %}
+<script type="text/javascript">
+  var current = 0;
+  var num=8;
+  var userID = $.session.get('userID');
+
+  function requestbook(){
+    $.ajax({
+      url: "http://localhost:8081/mybooks/" + userID+"/"+current*num+"/"+num,
+      data: {},
+      crossDomain: true,
+      type: "get",
+      dataType: "jsonp",
+      jsonp: "callback",
+      jsonpCallback: "mybooksHandler",
+      success: function (obj) {
+        if(obj.mybooks.length == 0){
+          current--;
+        }else{
+          
+       
+        $("#bookframes").empty();
+        for(var i=0;i<obj.mybooks.length;i++){
+          $("#bookframes").append("<div class='col-12 col-sm-6 col-md-6 col-lg-3'>"+
+          "<article class='article article-style-b' style='width:150px;'>"+
+            "<div class='article-header'>"+
+              "  <div class='article-image' style='background-image: url(../assets/img/news/img02.jpg)'>"+
+                "  </div>"+
+                " </div>"+
+                " <div class='article-details' style='padding:0;'>"+
+                  "   <div class='article-title' style='text-align: center;margin-top: 10px;'>"+
+                    "     <h6>"+obj.mybooks[i].fileName+"</h6>"+
+                    "    </div>"+
+                    "   <div class='article-cta' style='text-align: unset;'>"+
+                      "      <div style='display:inline-block;margin-left:10px;'><a class='btn btn-warning btn-action' onclick='deleteComment("+obj.mybooks[i].fileID+","+obj.mybooks[i].userID+")'>删除</a></div>"+
+                      "     <div style='display:inline-block;margin-left:20px;'><a class='btn btn-success btn-action' onclick='detail("+obj.mybooks[i].fileID+")'>阅读</a></div>"+
+                      "</div>"+
+                      "</div>"+
+                      "</article>"+
+                      " </div>");
+        }
+        }
+        $("#current").text((current+1)+"");
+        if(obj.count%8 == 0)
+        $("#allnum").text("共 "+parseInt(obj.count/8)+" 页");
+     else
+        $("#allnum").text("共 "+parseInt(obj.count/8+1)+" 页");
+      }
+    });
+  }
+
+  function detail(fileID){
+    $(document).ready(function(){
+    $.ajax({
+      url:"http://localhost:8081/findbook/"+fileID,
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "findbookHandler",
+      success:function(obj) {
+        $.session.set('fileID', obj.fileID);
+        $.session.set('fileName', obj.fileName);
+        $.session.set('author', obj.author);
+        $.session.set('edition', obj.edition);
+        $.session.set('press', obj.press);
+        window.location.href = "coverofbook.html";
+      }
+    });
+    });
+  }
+
+
+  function deleteComment(fileID,userID){
+    $.ajax({
+    url:"http://localhost:8081/bookDelete/"+fileID+"/"+userID,
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "bookDeleteHandler",
+    success:function(obj) {
+      if(obj == 1){
+        $.alert({
+            title:'提示!',
+            content:'删除成功',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'确定',
+                btnClass:'btn-blue'
+              }
+            }
+        });
+        requestbook();
+      }else{
+        $.alert({
+            title:'提示!',
+            content:'删除失败，请稍后再试',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'确定',
+                btnClass:'btn-blue'
+              }
+            }
+        });
+      }
+    }
+    });
+  }
+
+  $(document).ready(function () {
+    requestbook();
+  });
+
+  
+  $("#previous").click(function(){
+  if(current > 0)
+    current--;
+  else
+    return;
+
+  requestbook();
+   
+        
+    
+});
+
+$("#next").click(function(){
+  current++;
+  requestbook();
+ 
+});
+
+
+</script>
+
+  {% endblock %}

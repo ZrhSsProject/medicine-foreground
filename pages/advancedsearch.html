@@ -8,7 +8,7 @@
   <!-- General CSS Files -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
+  <link href="https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.css" rel="stylesheet">
   <!-- CSS Libraries -->
   <link rel="stylesheet" href="../node_modules/bootstrap-daterangepicker/daterangepicker.css">
   <link rel="stylesheet" href="../node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
@@ -79,16 +79,14 @@
               <li class="nav-item dropdown">
                 <a href="specialknowledgebase.html" class="nav-link"><i class="fas fa-th-large"></i> <span>专题资料库</span></a>
               </li>
+             
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i> <span>个人中心</span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">我的账户</a></li>
-                    <li><a href="#">我的收藏</a></li>
-                    <li><a href="#">我的评论</a></li>
-                    <li><a href="#">我的笔记</a></li>
-
-                    <li><a href="auth-login.html">登录</a></li>
-                    <li><a href="auth-register.html">注册</a></li>
+                    <li><a href="userinfo.html">我的账户</a></li>
+                    <li><a href="bookcollection.html">我的书架</a></li>
+                    <li><a href="mycomment.html">我的评论</a></li>
+                    <li><a href="notelist.html">我的笔记</a></li>
                     <li><a href="auth-forgot-password.html">忘记密码</a></li>
                     <li><a href="auth-reset-password.html">重置密码</a></li>
                   </ul>
@@ -99,6 +97,7 @@
                 <ul class="dropdown-menu">
                     <li><a href="#">用户管理</a></li>
                     <li><a href="#">评论管理</a></li>
+                    <li><a href="#">笔记管理</a></li>
                     <li><a href="#">知识可视化</a></li>
                     <li><a href="#">用户行为分析</a></li>
                     <li><a href="#">访问统计</a></li>
@@ -227,7 +226,7 @@
         <input type="button" class="btn btn-warning" onclick="moresearch()" value="检索" />
       </div>
 
-      <div class="card" style="clear:both;display:none;" id="result">
+      <div class="card" style="clear:both;display:none;background-color: rgba(247, 196, 162, 0.425);margin-bottom: 0em;" id="result">
         <div class="card-header">
           <h4 id="navTitle" style="color:tomato">搜索结果</h4>
           
@@ -308,12 +307,12 @@
       </div>
       <div >
         
-      </div>
-      <div class="card" id="moreresult" style="display:none;">
-        <div class="card-body" >
-          <nav aria-label="Page navigation example" style="float:right;">
+   
+      <div class="card" id="moreresult" style="display:none;height: 60px;margin-top: 0em;">
+        <div class="card-body" style="float:right;">
+          <nav aria-label="Page navigation example" >
             <ul class="pagination">
-              <li class="page-item" style="line-height: 35px;text-align: center;padding-right: 10px;font-weight: bolder;" id="allnum">共 10 页</li>
+              <li class="page-item" style="line-height: 35px;text-align: center;padding-right: 10px;font-weight: bolder;" id="allnum">共&nbsp&nbsp页</li>
               <li class="page-item" id="previous"><a class="page-link">上一页</a></li>         
               <li class="page-item" id="current" style="line-height: 35px;width: 20px;text-align: center;"><a class="page-link">1</a></li>
               <li class="page-item" id="next"><a class="page-link">下一页</a></li>
@@ -321,6 +320,7 @@
           </nav>
         </div>
       </div>
+      
   
         
       </div>
@@ -342,7 +342,8 @@
   <script src="../assets/js/stisla.js"></script>
   <script src="../assets/js/jquerysession.js"></script>
   <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-
+  <script src="https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
+  
   <!-- JS Libraies -->
   <script>
       var list = ['秦','汉','三国','晋','隋','唐','宋','元','明','清'];
@@ -390,6 +391,8 @@
         }
       });
       function moresearch(){
+        val ="";
+        current = 0;
         for(var i=0;i<$(":input[type='text']").length;i++){
             if($(":input[type='text']").eq(i).val() == "")
                 val+="NULL"+"/";
@@ -406,6 +409,7 @@
             jsonp: "callback",
             jsonpCallback: "advancedsearchHandler",
             success:function(obj) {
+            
             $("#result").css("display","block");
             $("#moreresult").css("display","block");
             if(obj.count%5 == 0)
@@ -450,9 +454,10 @@
             success:function(obj) {
                 if(obj.file.length == 0){
                     current--;
-                }else
+                }else{
                     modify(obj.file);
                 }
+            }
         });
       });
   </script>

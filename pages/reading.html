@@ -8,6 +8,7 @@
   <!-- General CSS Files -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link href="https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.css" rel="stylesheet">
 
   <!-- CSS Libraries -->
 
@@ -79,8 +80,11 @@
           <div class="accordion-header btn btn-secondary" role="button" data-toggle="collapse" data-target="#panel-body-1" aria-expanded="true" style="display: inline-block;height: 30px">
             <span>评论</span>
           </div>
-        
           
+          <div class="accordion-header btn btn-secondary" role="button" onclick="notebook()"  data-toggle="collapse" data-target="#panel-body-2" aria-expanded="true" style="display: inline-block;height: 30px">
+            <span data-toggle="tooltip" title="请先选中待写笔记内容"> 笔记</span>
+          </div>
+        
           <span id="index" style="margin-left: 10px;"></span>
           <span style="display:inline-block">跳转至: <input id="targetindex" type="text" value=" " style="height: 30px;width: 30px;text-align: center;display:inline-block;  border: 1px solid #bfc0cc6c"/> <span>页</span></span>
          
@@ -95,8 +99,8 @@
         </nav>
       </footer>
     </div>
-    <div class="accordion" id="accordion">
-      <div class="accordion-body collapse " id="panel-body-1" data-parent="#accordion" style="z-index: 1000;position: fixed;top:20%;left:35%;width:30%;">
+    <div class="accordion" id="accordion1">
+      <div class="accordion-body collapse " id="panel-body-1" data-parent="#accordion1" style="z-index: 1000;position: fixed;top:20%;left:35%;width:30%;">
         <div class="row">
           <div style="width:100%">
               <div class="card" style="background-color: rgb(182, 158, 121);">
@@ -112,7 +116,31 @@
                         </div>
                     </div>
                     <div class="card-footer pt-0">
+                      <button class="btn btn-warning" style="float:left" onclick="concalcomment()" >取消</button>
                       <button class="btn btn-warning" style="float:right" onclick="comment()" >发表评论</button>
+                    </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion" id="accordion2">
+      <div class="accordion-body collapse " id="panel-body-2" data-parent="#accordion2" style="z-index: 1000;position: fixed;top:20%;left:35%;width:30%;">
+        <div class="row">
+          <div style="width:100%">
+              <div class="card" style="background-color: rgb(182, 158, 121);">
+                    <div class="card-body pb-0">
+                    
+                        <div class="form-group">
+                          <label>内容</label>
+                          <textarea name="content"  id="notecontent" class="form-control" style=" min-height: 150px;"  spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></textarea>
+                          <!-- <textarea class="summernote-simple"></textarea> -->
+                        </div>
+                    </div>
+                    <div class="card-footer pt-0">
+                      <button class="btn btn-warning" style="float:left" onclick="concalnote()" >取消</button>
+                      <button class="btn btn-warning" style="float:right" onclick="note()" >写笔记</button>
                     </div>
               </div>
           </div>
@@ -132,6 +160,7 @@
   <script type="text/javascript" src="../assets/js/jquery.media.js"></script>
   <script src="../assets/js/jquerysession.js"></script>
   <script src="../assets/js/UTIF.js"></script>
+  <script src="https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
 
 
   <!-- JS Libraies -->
@@ -139,12 +168,138 @@
   
   var pages = 0;
   var current=1;
+  var userID = $.session.get('userID');
+  var fileID = $.session.get('fileID');
+  var doms = null;
+  var selectText = "";
+
+  function initinfo(){
+    $.ajax({
+      url:"http://localhost:8081/bookhandle/"+userID+"/"+fileID+"/"+current+"",
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "BookHandleHandler",
+      success:function(obj) {
+        change(obj);
+      }
+    });
+  }
+    
+  function notedetail(noteID){
+    $.ajax({
+      url:"http://localhost:8081/getnote/"+noteID,
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "getnoteHandler",
+      success:function(obj) {
+        $.alert({
+            title:'笔记',
+            content:obj.content,
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'确定',
+                btnClass:'btn-blue'
+              }
+            }
+        });
+      
+      }
+    });
+  }
+
+  function notebook(){
+    var selecter = window.getSelection();
+    var selectStr = selecter.toString();
+    selectText = selectStr;
+    if (selectStr.trim != "") {
+      var rang = selecter.getRangeAt(0);//得到选取文本范围
+      var ele = document.createElement("strong");
+      ele.textContent = selectStr;
+      ele.style.color="green";
+      rang.surroundContents(ele);
+      doms = ele;
+    }
+  }
+
+  function note(){
+    $.ajax({
+      url:"http://localhost:8081/addnote/"+fileID+"/"+userID+"/"+$.session.get("fileName")+"/"+selectText+"/"+$("#notecontent").val(),
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "addnoteHandler",
+      success:function(obj) {
+        if(obj.fileID != -1){
+          doms.setAttribute("onclick","notedetail("+obj.noteID+")");
+          $("#panel-body-2").removeClass("show");
+          $.alert({
+            title:'提示!',
+            content:'笔记已保存',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'确定',
+                btnClass:'btn-blue'
+              }
+            }
+          });
+
+          var infos= {
+              "info":$("#passage").html(),
+              "users":$.session.get('userID'),
+              "files":$.session.get('fileID'),
+              "pages":current
+          };
+          infos = JSON.stringify(infos);
+          $.ajax({
+            url:"http://localhost:8081/savenote",
+            type:'post',
+            data:infos,
+            crossDomain:true,
+            headers : {"Content-Type" : "application/json;charset=utf-8"},
+            success: function (data) {
+            }
+          });
+
+          } else
+          $.alert({
+            title:'提示!',
+            content:'笔记保存失败，请稍后再试~',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'取消',
+                btnClass:'btn-blue'
+              }
+            }
+          });
+      }
+    });
+  }
+
+  function concalnote(){
+    $("#panel-body-2").removeClass("show");
+  }
+
+  function concalcomment(){
+    $("#panel-body-1").removeClass("show");
+  }
 
   function comment(){
-    userID = $.session.get('userID');
-    fileID = $.session.get('fileID');
     $.ajax({
-      url:"http://localhost:8081/CommentAdd/"+fileID+"/"+userID+"/"+$("#commenttitle").val()+"/"+$("#commentcontent").val(),
+      url:"http://localhost:8081/CommentAdd/"+fileID+"/"+userID+"/"+$("#commenttitle").val()+"/"+$("#commentcontent").val()+"/"+$.session.get("fileName")+"/"+$.session.get("userName"),
       data:{},
       crossDomain:true,
       type:"get",
@@ -154,13 +309,33 @@
       success:function(obj) {
         if(obj.content !=null){
           $("#panel-body-1").removeClass("show");
-          alert("评论成功");
-        } else
-          alert("评论失败");
+          $.alert({
+            title:'提示!',
+            content:'评论成功',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'确定',
+                btnClass:'btn-blue'
+              }
+            }
+          });
+          } else
+          $.alert({
+            title:'提示!',
+            content:'评论失败',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'取消',
+                btnClass:'btn-blue'
+              }
+            }
+          });
       }
     });
-
-    
   }
 
   $("#fontchange").change(function(){
@@ -191,20 +366,7 @@
   }
   
   $(document).ready(function(){
-    fileID = $.session.get('fileID');
-    $.ajax({
-      url:"http://localhost:8081/bookhandle/"+fileID+"/"+current+"",
-      data:{},
-      crossDomain:true,
-      type:"get",
-      dataType:"jsonp",
-      jsonp: "callback",
-      jsonpCallback: "BookHandleHandler",
-      success:function(obj) {
-        change(obj);
-      
-      }
-    });
+    initinfo();
   });
 
 
@@ -213,7 +375,7 @@
   if(current > 1){
     current--;
     $.ajax({
-      url:"http://localhost:8081/bookhandle/"+fileID+"/"+current+"",
+      url:"http://localhost:8081/bookhandle/"+userID+"/"+fileID+"/"+current+"",
       data:{},
       crossDomain:true,
       type:"get",
@@ -233,7 +395,7 @@ $("#next").click(function(){
   if(current < pages){
     current++;
     $.ajax({
-      url:"http://localhost:8081/bookhandle/"+fileID+"/"+current+"",
+      url:"http://localhost:8081/bookhandle/"+userID+"/"+fileID+"/"+current+"",
       data:{},
       crossDomain:true,
       type:"get",
@@ -254,7 +416,7 @@ $("#next").click(function(){
     $("#index").text(parseInt(($('#process').val()/100)*pages) +" / "+pages);
     current=parseInt(($('#process').val()/100)*pages);
     $.ajax({
-      url:"http://localhost:8081/bookhandle/"+fileID+"/"+parseInt(($('#process').val()/100)*pages),
+      url:"http://localhost:8081/bookhandle/"+userID+"/"+fileID+"/"+parseInt(($('#process').val()/100)*pages),
       data:{},
       crossDomain:true,
       type:"get",
@@ -272,7 +434,7 @@ $("#next").click(function(){
   $("#targetindex").keyup(function(){
     current=$("#targetindex").val();
     $.ajax({
-    url:"http://localhost:8081/bookhandle/"+fileID+"/"+ $("#targetindex").val()+"",
+    url:"http://localhost:8081/bookhandle/"+userID+"/"+fileID+"/"+ $("#targetindex").val()+"",
     data:{},
     crossDomain:true,
     type:"get",

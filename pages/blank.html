@@ -117,76 +117,14 @@
 
       <!-- Main Content -->
       <div class="main-content">
-<section>
-  <div class="card" style="margin-bottom: 0mm;">
-    <div class="card-body">
-      <div class="media">
-        <img class="mr-3" src="../assets/img/news/img02.jpg" alt="Generic placeholder image" style="height:200px;width:150px;">
-        <div class="media-body">
-          <h5 id="fileName" class="mt-0" style="padding-top: 5%;padding-left: 3%;">思考中医</h5>
-          <p id="author" class="mb-0" style="padding-left: 3%;">清·郑寿全著</p>
-          <p id="edition" class="mb-0" style="padding-left: 3%;">2004年10月3日 </p>
-          <p id="press" class="mb-0" style="padding-left: 3%;">大医精诚中医在线版权所有</p>
-          <div class="buttons" style="padding-left: 3%;padding-top: 2%;">
-            <a href="reading.html" class="btn btn-warning">开始阅读</a>
-            <a href="#" id="addbook" class="btn btn-success">加入书架</a>
+        <section class="section">
+          <div class="section-header">
+            <h1>Blank Page</h1>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="card">
-    <div class="card-body">
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-            aria-selected="true">简介</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-            aria-selected="false">目录
-
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments"
-            aria-selected="false">评论</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="comments-tab" data-toggle="tab" href="#notes" role="tab" aria-controls="notes"
-            aria-selected="false">笔记</a>
-        </li>
-      </ul>
-      <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        </div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        </div>
-        <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
-          <div style="margin-bottom: 20px;"><h6 class="mt-3" style="color:goldenrod ;">评论<span class="text-muted" style="font-size: 12px;margin-left: 10px;" id="allnums">(共&nbsp;&nbsp; 条)</span></h6></div>
-          <ul class="list-unstyled list-unstyled-border" id="commentslist">
-        </ul>
-        </div>
-
-        <div class="tab-pane fade" id="notes" role="tabpanel" aria-labelledby="notes-tab">
-          <div style="margin-bottom: 20px;"><h6 class="mt-3" style="color:goldenrod ;">我的笔记</h6></div>
-          <ul class="list-unstyled list-unstyled-border" id="noteslist">
-            <li class="media" >
-              <div class="media-body">
-                <div class="media-title" id="commentContent" style="font-size:14px;">发现这本书后，连夜加班看完了。怎么说呢？就是停不下来的感觉。好在，现实中这样的情况毕竟是少的</div>
-                <div class="text-small text-muted" ><span id="userName">admin</span> <div class="bullet"></div><span id="commentTime"> 2020年2月20日 14:20</span></div>
-              </div>
-            </li>
-        </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</section>
-
-
+          <div class="section-body">
+          </div>
+        </section>
       </div>
       <footer class="main-footer">
         <div class="footer-left">
@@ -209,114 +147,6 @@
   <script src="https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
   
   <!-- JS Libraies -->
-<script type="text/javascript">
-  $(document).ready(function () {
-    fileID = $.session.get('fileID');
-    userID = $.session.get('userID');
-    fileName = $.session.get("fileName");
-    author = $.session.get("author");
-    edition = $.session.get("edition");
-    press = $.session.get("press");
-
-    $("#fileName").text(fileName);
-    $("#author").text(author + "著");
-    $("#edition").text(edition);
-    $("#press").text(press);
-
-    $.ajax({
-      url: "http://localhost:8081/BookDetail/" + fileID+"/"+userID,
-      data: {},
-      crossDomain: true,
-      type: "get",
-      dataType: "jsonp",
-      jsonp: "callback",
-      jsonpCallback: "BookDetailHandler",
-      success: function (obj) {
-        $("#home").text(obj.fileinfo.introduce);
-        $("#profile").text(obj.fileinfo.list);
-
-        $("#allnums").text("(共 "+obj.count+" 条)");
-        
-        $("#commentslist").empty();
-        for(var i=obj.count-1;i>=0;i--){
-          $("#commentslist").append("<li class='media'>"+
-              "<div class='media-body'>"+
-                "<div class='media-title' style='font-size:14px;'>"+obj.filecomments[i].content+"</div>"+
-                "<div class='text-small text-muted'><span>"+obj.filecomments[i].userName+"</span> <div class='bullet'></div><span>"+obj.filecomments[i].commentTime+"</span></div>"+
-                "</div>"+
-                "</li>");
-        }
-
-        $("#noteslist").empty();
-        for(var i=obj.mynotes.length-1;i>=0;i--){
-          $("#noteslist").append("<li class='media'>"+
-              "<div class='media-body'>"+
-                "<div class='media-title' style='font-size:14px;'>"+obj.mynotes[i].content+"</div>"+
-                "<div class='text-small text-muted'><span>章节内容：</span> <div class='bullet'></div><span>"+obj.mynotes[i].origin+"</span></div>"+
-                "</div>"+
-                "</li>");
-        }
-      }
-    });
-  });
-
-
-  $("#addbook").click(function () {
-    userID = $.session.get("userID");
-    $.ajax({
-      url: "http://localhost:8081/addbook/" + fileID + "/" + fileName + "/" + userID,
-      data: {},
-      crossDomain: true,
-      type: "get",
-      dataType: "jsonp",
-      jsonp: "callback",
-      jsonpCallback: "addbookHandler",
-      success: function (obj) {
-        if (obj == 0) {
-          $.alert({
-            title: '提示!',
-            content: '添加成功',
-            animation: 'scale',
-            closeAnimation: 'scale',
-            buttons: {
-              okay: {
-                text: '确定',
-                btnClass: 'btn-blue'
-              }
-            }
-          });
-        } else if (obj > 0) {
-          $.alert({
-            title: '提示!',
-            content: '书架中已经有此书',
-            animation: 'scale',
-            closeAnimation: 'scale',
-            buttons: {
-              okay: {
-                text: '取消',
-                btnClass: 'btn-blue'
-              }
-            }
-          });
-        } else {
-          $.alert({
-            title: '提示!',
-            content: '书架中已经有此书',
-            animation: 'scale',
-            closeAnimation: 'scale',
-            buttons: {
-              okay: {
-                text: '取消',
-                btnClass: 'btn-blue'
-              }
-            }
-          });
-        }
-      }
-    });
-  });
-
-</script>
 
   <!-- Template JS File -->
   <script src="../assets/js/scripts.js"></script>

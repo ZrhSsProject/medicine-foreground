@@ -1781,3 +1781,6 @@ tr:first-child > td > .fc-day-grid-event {
 
 body.sidebar-mini .main-sidebar .sidebar-menu > li.active > a {
   background-color: #e29547; }
+
+.section .section-title:before {
+  background-color: #e29547; }

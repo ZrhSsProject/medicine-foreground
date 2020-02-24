@@ -32,12 +32,138 @@
   
   var pages = 0;
   var current=1;
+  var userID = $.session.get('userID');
+  var fileID = $.session.get('fileID');
+  var doms = null;
+  var selectText = "";
+
+  function initinfo(){
+    $.ajax({
+      url:"http://localhost:8081/bookhandle/"+userID+"/"+fileID+"/"+current+"",
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "BookHandleHandler",
+      success:function(obj) {
+        change(obj);
+      }
+    });
+  }
+    
+  function notedetail(noteID){
+    $.ajax({
+      url:"http://localhost:8081/getnote/"+noteID,
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "getnoteHandler",
+      success:function(obj) {
+        $.alert({
+            title:'笔记',
+            content:obj.content,
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'确定',
+                btnClass:'btn-blue'
+              }
+            }
+        });
+      
+      }
+    });
+  }
+
+  function notebook(){
+    var selecter = window.getSelection();
+    var selectStr = selecter.toString();
+    selectText = selectStr;
+    if (selectStr.trim != "") {
+      var rang = selecter.getRangeAt(0);//得到选取文本范围
+      var ele = document.createElement("strong");
+      ele.textContent = selectStr;
+      ele.style.color="green";
+      rang.surroundContents(ele);
+      doms = ele;
+    }
+  }
+
+  function note(){
+    $.ajax({
+      url:"http://localhost:8081/addnote/"+fileID+"/"+userID+"/"+$.session.get("fileName")+"/"+selectText+"/"+$("#notecontent").val(),
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "addnoteHandler",
+      success:function(obj) {
+        if(obj.fileID != -1){
+          doms.setAttribute("onclick","notedetail("+obj.noteID+")");
+          $("#panel-body-2").removeClass("show");
+          $.alert({
+            title:'提示!',
+            content:'笔记已保存',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'确定',
+                btnClass:'btn-blue'
+              }
+            }
+          });
+
+          var infos= {
+              "info":$("#passage").html(),
+              "users":$.session.get('userID'),
+              "files":$.session.get('fileID'),
+              "pages":current
+          };
+          infos = JSON.stringify(infos);
+          $.ajax({
+            url:"http://localhost:8081/savenote",
+            type:'post',
+            data:infos,
+            crossDomain:true,
+            headers : {"Content-Type" : "application/json;charset=utf-8"},
+            success: function (data) {
+            }
+          });
+
+          } else
+          $.alert({
+            title:'提示!',
+            content:'笔记保存失败，请稍后再试~',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'取消',
+                btnClass:'btn-blue'
+              }
+            }
+          });
+      }
+    });
+  }
+
+  function concalnote(){
+    $("#panel-body-2").removeClass("show");
+  }
+
+  function concalcomment(){
+    $("#panel-body-1").removeClass("show");
+  }
 
   function comment(){
-    userID = $.session.get('userID');
-    fileID = $.session.get('fileID');
     $.ajax({
-      url:"http://localhost:8081/CommentAdd/"+fileID+"/"+userID+"/"+$("#commenttitle").val()+"/"+$("#commentcontent").val(),
+      url:"http://localhost:8081/CommentAdd/"+fileID+"/"+userID+"/"+$("#commenttitle").val()+"/"+$("#commentcontent").val()+"/"+$.session.get("fileName")+"/"+$.session.get("userName"),
       data:{},
       crossDomain:true,
       type:"get",
@@ -47,13 +173,33 @@
       success:function(obj) {
         if(obj.content !=null){
           $("#panel-body-1").removeClass("show");
-          alert("评论成功");
-        } else
-          alert("评论失败");
+          $.alert({
+            title:'提示!',
+            content:'评论成功',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'确定',
+                btnClass:'btn-blue'
+              }
+            }
+          });
+          } else
+          $.alert({
+            title:'提示!',
+            content:'评论失败',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'取消',
+                btnClass:'btn-blue'
+              }
+            }
+          });
       }
     });
-
-    
   }
 
   $("#fontchange").change(function(){
@@ -84,20 +230,7 @@
   }
   
   $(document).ready(function(){
-    fileID = $.session.get('fileID');
-    $.ajax({
-      url:"http://localhost:8081/bookhandle/"+fileID+"/"+current+"",
-      data:{},
-      crossDomain:true,
-      type:"get",
-      dataType:"jsonp",
-      jsonp: "callback",
-      jsonpCallback: "BookHandleHandler",
-      success:function(obj) {
-        change(obj);
-      
-      }
-    });
+    initinfo();
   });
 
 
@@ -106,7 +239,7 @@
   if(current > 1){
     current--;
     $.ajax({
-      url:"http://localhost:8081/bookhandle/"+fileID+"/"+current+"",
+      url:"http://localhost:8081/bookhandle/"+userID+"/"+fileID+"/"+current+"",
       data:{},
       crossDomain:true,
       type:"get",
@@ -126,7 +259,7 @@ $("#next").click(function(){
   if(current < pages){
     current++;
     $.ajax({
-      url:"http://localhost:8081/bookhandle/"+fileID+"/"+current+"",
+      url:"http://localhost:8081/bookhandle/"+userID+"/"+fileID+"/"+current+"",
       data:{},
       crossDomain:true,
       type:"get",
@@ -147,7 +280,7 @@ $("#next").click(function(){
     $("#index").text(parseInt(($('#process').val()/100)*pages) +" / "+pages);
     current=parseInt(($('#process').val()/100)*pages);
     $.ajax({
-      url:"http://localhost:8081/bookhandle/"+fileID+"/"+parseInt(($('#process').val()/100)*pages),
+      url:"http://localhost:8081/bookhandle/"+userID+"/"+fileID+"/"+parseInt(($('#process').val()/100)*pages),
       data:{},
       crossDomain:true,
       type:"get",
@@ -165,7 +298,7 @@ $("#next").click(function(){
   $("#targetindex").keyup(function(){
     current=$("#targetindex").val();
     $.ajax({
-    url:"http://localhost:8081/bookhandle/"+fileID+"/"+ $("#targetindex").val()+"",
+    url:"http://localhost:8081/bookhandle/"+userID+"/"+fileID+"/"+ $("#targetindex").val()+"",
     data:{},
     crossDomain:true,
     type:"get",
