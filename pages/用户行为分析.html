@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">  
-  <title>Blank Page</title>
+  <title>Modules &rsaquo; Chart.js</title>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -114,76 +114,59 @@
 
       <!-- Main Content -->
       <div class="main-content">
-<section>
-  <div class="card" style="margin-bottom: 0mm;">
-    <div class="card-body">
-      <div class="media">
-        <img class="mr-3" src="../assets/img/news/img02.jpg" alt="Generic placeholder image" style="height:200px;width:150px;">
-        <div class="media-body">
-          <h5 id="fileName" class="mt-0" style="padding-top: 5%;padding-left: 3%;">思考中医</h5>
-          <p id="author" class="mb-0" style="padding-left: 3%;">清·郑寿全著</p>
-          <p id="edition" class="mb-0" style="padding-left: 3%;">2004年10月3日 </p>
-          <p id="press" class="mb-0" style="padding-left: 3%;">大医精诚中医在线版权所有</p>
-          <div class="buttons" style="padding-left: 3%;padding-top: 2%;">
-            <a href="reading.html" class="btn btn-warning" onclick="todayhot()">开始阅读</a>
-            <a href="#" id="addbook" class="btn btn-success">加入书架</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        <section class="section">
+          <div class="section-body">
+            <h2 class="section-title">数据统计</h2>
+            <p class="section-lead">
+               数据保持当日更新
+            </p>
 
-  <div class="card">
-    <div class="card-body">
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-            aria-selected="true">简介</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-            aria-selected="false">目录
-
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments"
-            aria-selected="false">评论</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="comments-tab" data-toggle="tab" href="#notes" role="tab" aria-controls="notes"
-            aria-selected="false">笔记</a>
-        </li>
-      </ul>
-      <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        </div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        </div>
-        <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
-          <div style="margin-bottom: 20px;"><h6 class="mt-3" style="color:goldenrod ;">评论<span class="text-muted" style="font-size: 12px;margin-left: 10px;" id="allnums">(共&nbsp;&nbsp; 条)</span></h6></div>
-          <ul class="list-unstyled list-unstyled-border" id="commentslist">
-        </ul>
-        </div>
-
-        <div class="tab-pane fade" id="notes" role="tabpanel" aria-labelledby="notes-tab">
-          <div style="margin-bottom: 20px;"><h6 class="mt-3" style="color:goldenrod ;">我的笔记</h6></div>
-          <ul class="list-unstyled list-unstyled-border" id="noteslist">
-            <li class="media" >
-              <div class="media-body">
-                <div class="media-title" id="commentContent" style="font-size:14px;">发现这本书后，连夜加班看完了。怎么说呢？就是停不下来的感觉。好在，现实中这样的情况毕竟是少的</div>
-                <div class="text-small text-muted" ><span id="userName">admin</span> <div class="bullet"></div><span id="commentTime"> 2020年2月20日 14:20</span></div>
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>网站访问量统计</h4>
+                  </div>
+                  <div class="card-body">
+                    <canvas id="myChart"></canvas>
+                  </div>
+                </div>
               </div>
-            </li>
-        </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</section>
-
-
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>今日热门书籍</h4>
+                  </div>
+                  <div class="card-body">
+                    <canvas id="myChart2"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>今日热搜</h4>
+                  </div>
+                  <div class="card-body">
+                    <canvas id="myChart3"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>Pie Chart</h4>
+                  </div>
+                  <div class="card-body">
+                    <canvas id="myChart4"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
       <footer class="main-footer">
         <div class="footer-left">
@@ -206,128 +189,217 @@
   <script src="https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
   
   <!-- JS Libraies -->
-<script type="text/javascript">
-  function todayhot(){
-    fileID = $.session.get('fileID');
-    fileName = $.session.get('fileName');
-    $.ajax({
-      url:"http://localhost:8081/addHot/"+fileID+"/"+fileName,
-      data:{},
-      crossDomain:true,
-      type:"get",
-      dataType:"jsonp",
-      jsonp: "callback",
-      jsonpCallback: "addHotHandler",
-      success:function(obj) {
-      }
-    });
-  }
-
-  $(document).ready(function () {
-    fileID = $.session.get('fileID');
-    userID = $.session.get('userID');
-    fileName = $.session.get("fileName");
-    author = $.session.get("author");
-    edition = $.session.get("edition");
-    press = $.session.get("press");
-
-    $("#fileName").text(fileName);
-    $("#author").text(author + "著");
-    $("#edition").text(edition);
-    $("#press").text(press);
-
-    $.ajax({
-      url: "http://localhost:8081/BookDetail/" + fileID+"/"+userID,
-      data: {},
-      crossDomain: true,
-      type: "get",
-      dataType: "jsonp",
-      jsonp: "callback",
-      jsonpCallback: "BookDetailHandler",
-      success: function (obj) {
-        $("#home").text(obj.fileinfo.introduce);
-        $("#profile").text(obj.fileinfo.list);
-
-        $("#allnums").text("(共 "+obj.count+" 条)");
-        
-        $("#commentslist").empty();
-        for(var i=obj.count-1;i>=0;i--){
-          $("#commentslist").append("<li class='media'>"+
-              "<div class='media-body'>"+
-                "<div class='media-title' style='font-size:14px;'>"+obj.filecomments[i].content+"</div>"+
-                "<div class='text-small text-muted'><span>"+obj.filecomments[i].userName+"</span> <div class='bullet'></div><span>"+obj.filecomments[i].commentTime+"</span></div>"+
-                "</div>"+
-                "</li>");
+  <script src="../node_modules/chart.js/dist/Chart.min.js"></script>
+  
+<script>
+var ctx1 = document.getElementById("myChart").getContext('2d');
+$.ajax({
+    url:"http://localhost:8081/getDay",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "getDayHandler",
+    success:function(obj) {
+      val = obj;
+      var myChart = new Chart(ctx1, {
+        type: 'line',
+        data: {
+          labels: [val[6].day,val[5].day,val[4].day,val[3].day,val[2].day,val[1].day,val[0].day],
+          datasets: [{
+            label: '访问量',
+            data:  [val[6].count,val[5].count,val[4].count,val[3].count,val[2].count,val[1].count,val[0].count],
+            borderWidth: 2,
+            backgroundColor: '#6777ef',
+            borderColor: '#6777ef',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#ffffff',
+            pointRadius: 4
+          }]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            yAxes: [{
+              gridLines: {
+                drawBorder: false,
+                color: '#f2f2f2',
+              },
+              ticks: {
+                beginAtZero: true,
+                stepSize: 2
+              }
+            }],
+            xAxes: [{
+              ticks: {
+                display: false
+              },
+              gridLines: {
+                display: false
+              }
+            }]
+          },
         }
-
-        $("#noteslist").empty();
-        for(var i=obj.mynotes.length-1;i>=0;i--){
-          $("#noteslist").append("<li class='media'>"+
-              "<div class='media-body'>"+
-                "<div class='media-title' style='font-size:14px;'>"+obj.mynotes[i].content+"</div>"+
-                "<div class='text-small text-muted'><span>章节内容：</span> <div class='bullet'></div><span>"+obj.mynotes[i].origin+"</span></div>"+
-                "</div>"+
-                "</li>");
-        }
-      }
-    });
+      });
+    } 
   });
 
 
-  $("#addbook").click(function () {
-    userID = $.session.get("userID");
-    $.ajax({
-      url: "http://localhost:8081/addbook/" + fileID + "/" + fileName + "/" + userID,
-      data: {},
-      crossDomain: true,
-      type: "get",
-      dataType: "jsonp",
-      jsonp: "callback",
-      jsonpCallback: "addbookHandler",
-      success: function (obj) {
-        if (obj == 0) {
-          $.alert({
-            title: '提示!',
-            content: '添加成功',
-            animation: 'scale',
-            closeAnimation: 'scale',
-            buttons: {
-              okay: {
-                text: '确定',
-                btnClass: 'btn-blue'
+
+var ctx2 = document.getElementById("myChart2").getContext('2d');
+$.ajax({
+    url:"http://localhost:8081/getHot",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "getHotHandler",
+    success:function(obj) {
+      var myChart = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+          labels: [obj[0].fileName,obj[1].fileName,obj[2].fileName,obj[3].fileName,obj[4].fileName,obj[5].fileName,obj[6].fileName],
+          datasets: [{
+            label: '阅读量',
+            data: [obj[0].count,obj[1].count,obj[2].count,obj[3].count,obj[4].count,obj[5].count,obj[6].count],
+            borderWidth: 2,
+            backgroundColor: '#6777ef',
+            borderColor: '#6777ef',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#ffffff',
+            pointRadius: 4
+          }]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            yAxes: [{
+              gridLines: {
+                drawBorder: false,
+                color: '#f2f2f2',
+              },
+              ticks: {
+                beginAtZero: true,
+                stepSize: 1
               }
-            }
-          });
-        } else if (obj > 0) {
-          $.alert({
-            title: '提示!',
-            content: '书架中已经有此书',
-            animation: 'scale',
-            closeAnimation: 'scale',
-            buttons: {
-              okay: {
-                text: '取消',
-                btnClass: 'btn-blue'
+            }],
+            xAxes: [{
+              ticks: {
+                display: false
+              },
+              gridLines: {
+                display: false
               }
-            }
-          });
-        } else {
-          $.alert({
-            title: '提示!',
-            content: '书架中已经有此书',
-            animation: 'scale',
-            closeAnimation: 'scale',
-            buttons: {
-              okay: {
-                text: '取消',
-                btnClass: 'btn-blue'
-              }
-            }
-          });
+            }]
+          },
         }
-      }
-    });
+      });
+    }
   });
+
+var ctx3 = document.getElementById("myChart3").getContext('2d');
+$.ajax({
+    url:"http://localhost:8081/getPhrase",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "getPhraseHandler",
+    success:function(obj) {
+      var myChart = new Chart(ctx3, {
+        type: 'bar',
+        data: {
+          labels: [obj[0].phrase,obj[1].phrase,obj[2].phrase,obj[3].phrase,obj[4].phrase,obj[5].phrase,obj[6].phrase],
+          datasets: [{
+            label: '阅读量',
+            data: [obj[0].count,obj[1].count,obj[2].count,obj[3].count,obj[4].count,obj[5].count,obj[6].count],
+            borderWidth: 2,
+            backgroundColor: '#6777ef',
+            borderColor: '#6777ef',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#ffffff',
+            pointRadius: 4
+          }]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            yAxes: [{
+              gridLines: {
+                drawBorder: false,
+                color: '#f2f2f2',
+              },
+              ticks: {
+                beginAtZero: true,
+                stepSize: 1
+              }
+            }],
+            xAxes: [{
+              ticks: {
+                display: false
+              },
+              gridLines: {
+                display: false
+              }
+            }]
+          },
+        }
+      });
+    }
+  });
+
+var ctx = document.getElementById("myChart4").getContext('2d');
+$.ajax({
+    url:"http://localhost:8081/getBook",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "getBookHandler",
+    success:function(obj) {
+      var datas = [];
+      var labels = [];
+      for(var i=0;i<obj.length;i++){
+        datas.push(obj[i].num);
+        labels.push(obj[i].cateName);
+      }
+      
+      var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data:datas,
+            backgroundColor: [
+              '#191d21',
+              '#63ed7a',
+              '#ffa426',
+              '#fc544b',
+              '#6777ef',
+            ],
+            label: 'Dataset 1'
+          }],
+          labels: labels,
+        },
+        options: {
+          responsive: true,
+          legend: {
+            position: 'bottom',
+          },
+        }
+      });
+    }
+  });
+
 
 </script>
 

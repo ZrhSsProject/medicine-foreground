@@ -14,7 +14,7 @@
           <p id="edition" class="mb-0" style="padding-left: 3%;">2004年10月3日 </p>
           <p id="press" class="mb-0" style="padding-left: 3%;">大医精诚中医在线版权所有</p>
           <div class="buttons" style="padding-left: 3%;padding-top: 2%;">
-            <a href="reading.html" class="btn btn-warning">开始阅读</a>
+            <a href="reading.html" class="btn btn-warning" onclick="todayhot()">开始阅读</a>
             <a href="#" id="addbook" class="btn btn-success">加入书架</a>
           </div>
         </div>
@@ -77,6 +77,22 @@
 
 {% block plugins_js %}
 <script type="text/javascript">
+  function todayhot(){
+    fileID = $.session.get('fileID');
+    fileName = $.session.get('fileName');
+    $.ajax({
+      url:"http://localhost:8081/addHot/"+fileID+"/"+fileName,
+      data:{},
+      crossDomain:true,
+      type:"get",
+      dataType:"jsonp",
+      jsonp: "callback",
+      jsonpCallback: "addHotHandler",
+      success:function(obj) {
+      }
+    });
+  }
+
   $(document).ready(function () {
     fileID = $.session.get('fileID');
     userID = $.session.get('userID');

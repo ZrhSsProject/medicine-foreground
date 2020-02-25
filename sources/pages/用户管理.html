@@ -9,7 +9,7 @@
               <div class="card-header">
                 <h4>用户管理</h4>
                 <button style="margin-left: 20px;" class="btn btn-primary" onclick="adduser()">新建用户</button>
-                <button style="margin-left: 20px;" class="btn btn-primary">批量导入用户</button>
+                <button style="margin-left: 20px;" class="btn btn-primary" onclick="openfile()">批量导入用户</button>
               </div>
               <div class="card-body p-0">
                 <div class="table-responsive">
@@ -112,6 +112,34 @@
               </div>
             </div>
           </div>
+
+          <div class="accordion" id="accordion2">
+            <div class="accordion-body collapse " id="panel-body-2" data-parent="#accordion2" style="z-index: 1000;position: fixed;top:10%;left:35%;width:30%;">
+              <div class="row">
+                <div style="width:100%">
+                    <div class="card" style="background-color: rgb(182, 158, 121);">
+                          <div class="card-body pb-0">
+                            <div class="form-group">
+                              <label>文件位置</label>
+                              <input type="file" name="file" class="form-control" id="files" />
+                            </div>
+                            <div class="form-group">
+                              <label>首行移除</label>
+                              <select id="selects" class="form-control">
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="card-footer pt-0">
+                            <button class="btn btn-warning" style="float:left" onclick="cancelfile()" >取消</button>
+                            <button class="btn btn-warning" style="float:right" onclick="addfile()" >导入</button>
+                          </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
         {% endblock %}   
 
@@ -119,6 +147,44 @@
 <script>
   var current = 0;
   var num=5;
+
+  function openfile(){
+    $("#panel-body-2").addClass("show");
+  }
+
+  function cancelfile(){
+    $("#panel-body-2").removeClass("show");
+  }
+
+  function addfile(){
+    $("#panel-body-2").removeClass("show");
+    var formdata = new FormData();
+    formdata.append("file1",document.getElementById('files').files[0]);
+    $.ajax({
+      url : 'http://localhost:8081/uploadFile/'+$("#selects").val(),
+      type : 'POST',
+      data : formdata, // 上传formdata封装的数据包
+      dataType : 'JSON',
+      cache : false, // 不缓存
+      processData : false, // jQuery不要去处理发送的数据
+      contentType : false, // jQuery不要去设置Content-Type请求头
+      success : function(data) { alert("success");}
+    });
+    $.alert({
+            title:'提示!',
+            content:'添加成功',
+            animation:'scale',
+            closeAnimation:'scale',
+            buttons:{
+              okay:{
+                text:'确定',
+                btnClass:'btn-blue'
+              }
+            }
+        });
+  }
+
+
 
   function adduser(){
     $("#panel-body-1").addClass("show");

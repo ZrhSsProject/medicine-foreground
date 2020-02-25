@@ -1,0 +1,275 @@
+{% set title = 'Modules &rsaquo; Chart.js' %}
+{% set page = '访问统计.html' %}
+{% extends 'layouts/master.html' %}
+
+{% block content %}
+        <section class="section">
+          <div class="section-body">
+            <h2 class="section-title">数据统计</h2>
+            <p class="section-lead">
+               数据保持当日更新
+            </p>
+
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>网站访问量统计</h4>
+                  </div>
+                  <div class="card-body">
+                    <canvas id="myChart"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>今日热门书籍</h4>
+                  </div>
+                  <div class="card-body">
+                    <canvas id="myChart2"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>今日热搜</h4>
+                  </div>
+                  <div class="card-body">
+                    <canvas id="myChart3"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h4>Pie Chart</h4>
+                  </div>
+                  <div class="card-body">
+                    <canvas id="myChart4"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+{% endblock %}
+
+{% block plugins_js %}
+  <script src="../node_modules/chart.js/dist/Chart.min.js"></script>
+  
+<script>
+var ctx1 = document.getElementById("myChart").getContext('2d');
+$.ajax({
+    url:"http://localhost:8081/getDay",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "getDayHandler",
+    success:function(obj) {
+      val = obj;
+      var myChart = new Chart(ctx1, {
+        type: 'line',
+        data: {
+          labels: [val[6].day,val[5].day,val[4].day,val[3].day,val[2].day,val[1].day,val[0].day],
+          datasets: [{
+            label: '访问量',
+            data:  [val[6].count,val[5].count,val[4].count,val[3].count,val[2].count,val[1].count,val[0].count],
+            borderWidth: 2,
+            backgroundColor: '#6777ef',
+            borderColor: '#6777ef',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#ffffff',
+            pointRadius: 4
+          }]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            yAxes: [{
+              gridLines: {
+                drawBorder: false,
+                color: '#f2f2f2',
+              },
+              ticks: {
+                beginAtZero: true,
+                stepSize: 2
+              }
+            }],
+            xAxes: [{
+              ticks: {
+                display: false
+              },
+              gridLines: {
+                display: false
+              }
+            }]
+          },
+        }
+      });
+    } 
+  });
+
+
+
+var ctx2 = document.getElementById("myChart2").getContext('2d');
+$.ajax({
+    url:"http://localhost:8081/getHot",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "getHotHandler",
+    success:function(obj) {
+      var myChart = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+          labels: [obj[0].fileName,obj[1].fileName,obj[2].fileName,obj[3].fileName,obj[4].fileName,obj[5].fileName,obj[6].fileName],
+          datasets: [{
+            label: '阅读量',
+            data: [obj[0].count,obj[1].count,obj[2].count,obj[3].count,obj[4].count,obj[5].count,obj[6].count],
+            borderWidth: 2,
+            backgroundColor: '#6777ef',
+            borderColor: '#6777ef',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#ffffff',
+            pointRadius: 4
+          }]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            yAxes: [{
+              gridLines: {
+                drawBorder: false,
+                color: '#f2f2f2',
+              },
+              ticks: {
+                beginAtZero: true,
+                stepSize: 1
+              }
+            }],
+            xAxes: [{
+              ticks: {
+                display: false
+              },
+              gridLines: {
+                display: false
+              }
+            }]
+          },
+        }
+      });
+    }
+  });
+
+var ctx3 = document.getElementById("myChart3").getContext('2d');
+$.ajax({
+    url:"http://localhost:8081/getPhrase",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "getPhraseHandler",
+    success:function(obj) {
+      var myChart = new Chart(ctx3, {
+        type: 'bar',
+        data: {
+          labels: [obj[0].phrase,obj[1].phrase,obj[2].phrase,obj[3].phrase,obj[4].phrase,obj[5].phrase,obj[6].phrase],
+          datasets: [{
+            label: '阅读量',
+            data: [obj[0].count,obj[1].count,obj[2].count,obj[3].count,obj[4].count,obj[5].count,obj[6].count],
+            borderWidth: 2,
+            backgroundColor: '#6777ef',
+            borderColor: '#6777ef',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#ffffff',
+            pointRadius: 4
+          }]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            yAxes: [{
+              gridLines: {
+                drawBorder: false,
+                color: '#f2f2f2',
+              },
+              ticks: {
+                beginAtZero: true,
+                stepSize: 1
+              }
+            }],
+            xAxes: [{
+              ticks: {
+                display: false
+              },
+              gridLines: {
+                display: false
+              }
+            }]
+          },
+        }
+      });
+    }
+  });
+
+var ctx = document.getElementById("myChart4").getContext('2d');
+$.ajax({
+    url:"http://localhost:8081/getBook",
+    data:{},
+    crossDomain:true,
+    type:"get",
+    dataType:"jsonp",
+    jsonp: "callback",
+    jsonpCallback: "getBookHandler",
+    success:function(obj) {
+      var datas = [];
+      var labels = [];
+      for(var i=0;i<obj.length;i++){
+        datas.push(obj[i].num);
+        labels.push(obj[i].cateName);
+      }
+      
+      var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data:datas,
+            backgroundColor: [
+              '#191d21',
+              '#63ed7a',
+              '#ffa426',
+              '#fc544b',
+              '#6777ef',
+            ],
+            label: 'Dataset 1'
+          }],
+          labels: labels,
+        },
+        options: {
+          responsive: true,
+          legend: {
+            position: 'bottom',
+          },
+        }
+      });
+    }
+  });
+
+
+</script>
+{% endblock %}
