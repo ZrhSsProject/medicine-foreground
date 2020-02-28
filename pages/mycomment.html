@@ -232,9 +232,9 @@
   });
   }
 
-  function deleteComment(commentID){
+  function deleteComment(commentID,userID){
     $.ajax({
-    url:"http://localhost:8081/CommentDelete/"+commentID,
+    url:"http://localhost:8081/CommentDelete/"+commentID+"/"+userID,
     data:{},
     crossDomain:true,
     type:"get",
@@ -290,6 +290,7 @@
       $(this).append('<a class="btn btn-primary btn-action" data-toggle="tooltip" title="查看更多"><i class="fas fa-comment"></i></a>');
       $(this).append(' <a class="btn btn-danger btn-action" data-toggle="tooltip" title="删除"><i class="fas fa-trash"></i></a>');
       $(this).find("a").eq(1).attr("titles",obj[parseInt(index/4)].commentID);
+      $(this).find("a").eq(1).attr("titleed",obj[parseInt(index/4)].userID);
       $(this).find("a").eq(0).attr("onclick","info('"+obj[parseInt(index/4)].title+"','"+obj[parseInt(index/4)].content+"')");
       $(this).find("a").eq(1).confirm({
         icon:'fa fa-question',
@@ -304,7 +305,7 @@
               text: "确认",
               btnClass: 'btn-blue',
               action:function(){
-                deleteComment(this.$target.attr("titles"));
+                deleteComment(this.$target.attr("titles"),this.$target.attr("titleed"));
               }
           },
           cancel: {
