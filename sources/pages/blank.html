@@ -1,0 +1,156 @@
+{% set title = 'Blank Page' %}
+{% set page = 'blank.html' %}
+{% extends 'layouts/master.html' %}
+
+{% block content %}
+        <section class="section">
+            <div class="card-header-form" style="margin-left:30%;margin-top: 30px;width:40%;margin-bottom: 30px;">
+                <div class="input-group">
+                    <input id="querydata" type="text" class="form-control" placeholder="Search" >
+                  <a href="#"><button id ="simplesearch" class="btn btn-warning" style="height:40px;" onclick="getRes()"><i class="fas fa-search"></i></button></a>
+                </div>
+          </div>
+          <div id="main" style="width:100%;height:800px;background-color: rgb(218, 214, 214);padding: 20px;;"></div>
+        </section>
+{% endblock %}
+
+{% block plugins_js %}
+<script>
+    function getRes(){
+        $.ajax({
+        url:"http://localhost:8081/searchview/"+$("#querydata").val(),
+        data:{},
+        crossDomain:true,
+        type:"get",
+        dataType:"jsonp",
+        jsonp: "callback",
+        jsonpCallback: "searchviewHandler",
+        success:function(obj) {
+            var node = [];
+            var link = [];
+            // keyword
+            var key = {name:obj.filename,des:obj.filname,symbolSize:120,category:0,value:30};
+            node.push(key);
+            
+            // 作者
+            var author1 = {name:obj.author.author,des:obj.author.author,symbolSize:90,category:1};
+            node.push(author1);
+            var link1 = {source:obj.filename,target:obj.author.author,name:"作者",des:""};
+            link.push(link1);
+
+            for(var i=0;i<obj.relate.length;i++){
+                var file = {name:obj.relate[i].fileName,des:obj.relate[i].fileName,symbolSize:90,category:2};
+                node.push(file);
+                var link2 = {source:obj.author.author,target:obj.relate[i].fileName,name:"作品",des:""};
+                link.push(link2);
+            }
+
+            var myChart = echarts.init(document.getElementById('main'));
+            var categories = [{name:"书名"},{name:"作者"},{name:"关联书籍"}];
+            option = {
+                // 图的标题
+                title: {
+                    text: '搜索结果'
+                },
+                // 提示框的配置
+                tooltip: {
+                    formatter: function (x) {
+                        return x.data.des;
+                    }
+                },
+                // 工具箱
+                toolbox: {
+                    // 显示工具箱
+                    show: true,
+                    feature: {
+                        mark: {
+                            show: true
+                        },
+                        // 还原
+                        restore: {
+                            show: true
+                        },
+                        // 保存为图片
+                        saveAsImage: {
+                            show: true
+                        }
+                    }
+                },
+                legend: [{
+                    // selectedMode: 'single',
+                    //设置可以根据类别显示or隐藏节点
+                    data: categories.map(function (a) {
+                        return a.name;
+                    })
+                }],
+                series: [{
+                    type: 'graph', // 类型:关系图
+                    layout: 'force', //图的布局，类型为力导图
+                    symbolSize: 40, // 调整节点的大小
+                    roam: true, // 是否开启鼠标缩放和平移漫游。默认不开启。如果只想要开启缩放或者平移,可以设置成 'scale' 或者 'move'。设置成 true 为都开启
+                    edgeSymbol: ['circle', 'arrow'],
+                    edgeSymbolSize: [2, 10],
+                    edgeLabel: {
+                        normal: {
+                            textStyle: {
+                                fontSize: 20
+                            }
+                        }
+                    },
+                    force: {
+                        repulsion: 2500,
+                        edgeLength:100
+                    },
+                    draggable: true,
+                    lineStyle: {
+                        normal: {
+                            width: 3,
+                            color: '#4b565b',
+                        }
+                    },
+                    edgeLabel: {
+                        normal: {
+                            show: true,
+                            formatter: function (x) {
+                                return x.data.name;
+                            }
+                        }
+                    },
+                    label: {
+                        normal: {
+                            show: true,
+                            textStyle: {}
+                        }
+                    },
+        
+                    // 数据
+                    data: node,
+                    links:link,
+                    categories: categories,//给类别赋值
+                }]
+                };
+                myChart.setOption(option);
+            }    
+        });
+    }
+
+</script>
+{% endblock %}
+<!-- 思考中医上 -->
+<!-- [{
+    source: '刘备',//源节点
+    target: '关羽',//目标节点
+    name: '义弟',//关系
+    des: ''
+}], //定义关系，后续省略 -->
+<!-- [{
+    name: '刘备',
+    des: '刘备',
+    symbolSize: 70,//节点大小
+    category: 0,//设置节点所属类别
+},{
+    name: '关羽',
+    des: '关羽',
+    symbolSize: 70,//节点大小
+    category: 0,//设置节点所属类别
+}],//...后续数据省略 -->

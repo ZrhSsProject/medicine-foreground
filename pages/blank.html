@@ -71,6 +71,9 @@
               <li class="nav-item dropdown">
                 <a href="advancedsearch.html" class="nav-link"><i class="fas fa-search"></i> <span>高级检索</span></a>
               </li>
+              <li class="nav-item dropdown active">
+                <a href="blank.html" class="nav-link"><i class="fas fa-columns"></i> <span>知识可视化</span></a>
+              </li>
               <li class="nav-item dropdown">
                 <a href="specialknowledgebase.html" class="nav-link"><i class="fas fa-th-large"></i> <span>专题资料库</span></a>
               </li>
@@ -93,9 +96,7 @@
                     <li><a href="用户管理.html">用户管理</a></li>
                     <li><a href="评论管理.html">评论管理</a></li>
                     <li><a href="#">知识可视化</a></li>
-                    <li><a href="#">用户行为分析</a></li>
-                    <li><a href="blank.html">访问统计</a></li>
-                   
+                    <li><a href="用户行为分析.html">用户行为分析</a></li>
                 </ul>
               </li>
 
@@ -117,12 +118,13 @@
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
-          <div class="section-header">
-            <h1>Blank Page</h1>
+            <div class="card-header-form" style="margin-left:30%;margin-top: 30px;width:40%;margin-bottom: 30px;">
+                <div class="input-group">
+                    <input id="querydata" type="text" class="form-control" placeholder="Search" >
+                  <a href="#"><button id ="simplesearch" class="btn btn-warning" style="height:40px;" onclick="getRes()"><i class="fas fa-search"></i></button></a>
+                </div>
           </div>
-
-          <div class="section-body">
-          </div>
+          <div id="main" style="width:100%;height:800px;background-color: rgb(218, 214, 214);padding: 20px;;"></div>
         </section>
       </div>
       <footer class="main-footer">
@@ -144,8 +146,129 @@
   <script src="../assets/js/jquerysession.js"></script>
   <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
   <script src="https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
+  <script src="../assets/js/echart.js"></script>
   
   <!-- JS Libraies -->
+<script>
+    function getRes(){
+        $.ajax({
+        url:"http://localhost:8081/searchview/"+$("#querydata").val(),
+        data:{},
+        crossDomain:true,
+        type:"get",
+        dataType:"jsonp",
+        jsonp: "callback",
+        jsonpCallback: "searchviewHandler",
+        success:function(obj) {
+            var node = [];
+            var link = [];
+            // keyword
+            var key = {name:obj.filename,des:obj.filname,symbolSize:120,category:0,value:30};
+            node.push(key);
+            
+            // 作者
+            var author1 = {name:obj.author.author,des:obj.author.author,symbolSize:90,category:1};
+            node.push(author1);
+            var link1 = {source:obj.filename,target:obj.author.author,name:"作者",des:""};
+            link.push(link1);
+
+            for(var i=0;i<obj.relate.length;i++){
+                var file = {name:obj.relate[i].fileName,des:obj.relate[i].fileName,symbolSize:90,category:2};
+                node.push(file);
+                var link2 = {source:obj.author.author,target:obj.relate[i].fileName,name:"作品",des:""};
+                link.push(link2);
+            }
+
+            var myChart = echarts.init(document.getElementById('main'));
+            var categories = [{name:"书名"},{name:"作者"},{name:"关联书籍"}];
+            option = {
+                // 图的标题
+                title: {
+                    text: '搜索结果'
+                },
+                // 提示框的配置
+                tooltip: {
+                    formatter: function (x) {
+                        return x.data.des;
+                    }
+                },
+                // 工具箱
+                toolbox: {
+                    // 显示工具箱
+                    show: true,
+                    feature: {
+                        mark: {
+                            show: true
+                        },
+                        // 还原
+                        restore: {
+                            show: true
+                        },
+                        // 保存为图片
+                        saveAsImage: {
+                            show: true
+                        }
+                    }
+                },
+                legend: [{
+                    // selectedMode: 'single',
+                    //设置可以根据类别显示or隐藏节点
+                    data: categories.map(function (a) {
+                        return a.name;
+                    })
+                }],
+                series: [{
+                    type: 'graph', // 类型:关系图
+                    layout: 'force', //图的布局，类型为力导图
+                    symbolSize: 40, // 调整节点的大小
+                    roam: true, // 是否开启鼠标缩放和平移漫游。默认不开启。如果只想要开启缩放或者平移,可以设置成 'scale' 或者 'move'。设置成 true 为都开启
+                    edgeSymbol: ['circle', 'arrow'],
+                    edgeSymbolSize: [2, 10],
+                    edgeLabel: {
+                        normal: {
+                            textStyle: {
+                                fontSize: 20
+                            }
+                        }
+                    },
+                    force: {
+                        repulsion: 2500,
+                        edgeLength:100
+                    },
+                    draggable: true,
+                    lineStyle: {
+                        normal: {
+                            width: 3,
+                            color: '#4b565b',
+                        }
+                    },
+                    edgeLabel: {
+                        normal: {
+                            show: true,
+                            formatter: function (x) {
+                                return x.data.name;
+                            }
+                        }
+                    },
+                    label: {
+                        normal: {
+                            show: true,
+                            textStyle: {}
+                        }
+                    },
+        
+                    // 数据
+                    data: node,
+                    links:link,
+                    categories: categories,//给类别赋值
+                }]
+                };
+                myChart.setOption(option);
+            }    
+        });
+    }
+
+</script>
 
   <!-- Template JS File -->
   <script src="../assets/js/scripts.js"></script>
